@@ -54,6 +54,44 @@
         text-align: left;
         color: gray;
     }
+
+    .component-overview {
+    display: flex; /* Aligns items in a row */
+    flex-wrap: wrap; /* Allows wrapping to the next line if necessary */
+    gap: 10px; /* Adds space between the items */
+    padding: 10px; /* Adds space around the entire list */
+    justify-content: space-around; /* Distributes items evenly */
+}
+
+.component-item {
+    flex: 1 1 calc(30% - 20px); /* Sets a flexible width for each item */
+    box-sizing: border-box; /* Ensures padding and borders are included in the width */
+    max-width: 400px; /* Prevents items from growing too large */
+    background-color: #f9f9f9; /* Optional: Add a background color */
+    border: 1px solid #ddd; /* Optional: Add a border */
+    padding: 15px; /* Adds space inside each item */
+    border-radius: 8px; /* Adds rounded corners */
+    text-align: right; /* Centers the text */
+}
+
+.component-name {
+    font-size: 0.8em; /* Increases the font size */
+    line-height: 1.5; /* Improves readability with more line spacing */
+    margin: 10px 0; /* Adds space above and below the text */
+}
+
+.cds--aspect-ratio {
+    width: 100%; /* Ensures the aspect ratio component fits within its container */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.cds--resource-card__icon--action svg {
+    width: 20px; /* Makes the icon larger */
+    height: 20px;
+    margin-top: 15px; /* Adds space between the icon and the text */
+}
+
+
 </style>
 
 </head>
