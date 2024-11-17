@@ -40,112 +40,136 @@
 
     {% if current_user.is_authenticated %}
 
-         <ul class="component-overview">
+<ul class="component-overview">
 
-                <li class="component-item">
-                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
-                        <a class="component-item__link" href="{{ url_for('homes.new_home') }}">
-                            <p class="component-name">New Home<br>
-                                <br>Create, your new home project start from scracth or choose one of our custom designs</p>
-                        </a>
-                        <div class="cds--resource-card__icon--action">
-                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
-                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
-                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    </div>
-                </li>
+    <li class="component-item">
+        <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+            <div class="cds--aspect-ratio--object">
+                <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--purple" id="tag-121">
+                    <span title="Tested" class="cds--tag__label cds--tag--purple" dir="auto">Create</span>
+                </div>
+                <a class="component-item__link" href="{{ url_for('homes.new_home') }}">
+                    <p class="component-name">New<br>
+                        <br>Create, your new home project start from scratch or choose one of our custom designs</p>
+                </a>
+                <div class="cds--resource-card__icon--action">
+                    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                        <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                        <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <li class="component-item">
+        <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+            <div class="cds--aspect-ratio--object">
+                <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--blue" id="tag-121">
+                    <span title="Tested" class="cds--tag__label cds--tag--blue" dir="auto">Build</span>
+                </div>
+                <a class="component-item__link" href="#">
+                    <p class="component-name">Estimates<br>
+                        <br>Create your detail estimate, export and share.</p>
+
+                </a>
+                <div class="cds--resource-card__icon--action">
+                    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                        <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                        <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </li>
 
 
 
-                <li class="component-item">
-                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
-                        <a class="component-item__link" href="#">
-                           <p class="component-name"> Estimates <br>
-                               <br>Create your detail estimate, export and share.
-                           </p>
-                        </a>
-                        <div class="cds--resource-card__icon--action">
-                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
-                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
-                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
-                            </svg>
-                        </div>
+    <li class="component-item">
+        <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+            <div class="cds--aspect-ratio--object">
 
+                <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--green" id="tag-121">
+                    <span title="Tested" class="cds--tag__label cds--tag--green" dir="auto">help</span>
+                </div>
 
-                    </div>
-                    </div>
-
-                </li>
-
-                <li class="component-item">
-                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--4x4"><div class="cds--aspect-ratio--object">
-
-                            <p class="component-name"> Reach us @ <br>
+                    <p class="component-name">Contact<br>
+                        <br>Reach us @ <br>
                                 wuarpsdesigns@gmail.com<br>
                                 <br>in case you need any <br>
-                                help reach us or contact <br>
-                                us</p>
-
-                    </div>
-                    </div>
-                </li>
-
-            </ul>
+                                help reach us or contact <br></p>
+            </div>
+        </div>
+    </li>
+    <!-- Repeat for other list items -->
+</ul>
 
 
     {% else %}
 
-        <ul class="component-overview">
+<ul class="component-overview">
 
-                <li class="component-item">
-                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
-                        <a class="component-item__link" href="{{ url_for('users.registration') }}">
-                            <p class="component-name">Register<br>
-                                <br>First Time visitor register with us and explore all the possibilities to create your brand new home</p>
-                        </a>
-                        <div class="cds--resource-card__icon--action">
-                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
-                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
-                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
-                            </svg>
-                        </div>
+         <li class="component-item">
+            <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+                <div class="cds--aspect-ratio--object">
+                    <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--green" id="tag-121">
+                        <span title="Tested" class="cds--tag__label cds--tag--green" dir="auto">Register</span>
                     </div>
+                    <a class="component-item__link" href="{{ url_for('users.registration') }}">
+                        <p class="component-name">Register<br>
+                            <br>First Time visitor register with us and explore all the possibilities to create your brand new home</p>
+                    </a>
+                    <div class="cds--resource-card__icon--action">
+                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                            <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                            <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                        </svg>
                     </div>
-                </li>
+                </div>
+            </div>
+        </li>
 
-                <li class="component-item">
-                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
-                        <a class="component-item__link" href="{{ url_for('users.login') }}">
-                            <p class="component-name">Login<br>
-                                <br>Login continue working on your dream home or dear to create your brand new idea</p>
-                        </a>
-                         <div class="cds--resource-card__icon--action">
-                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
-                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
-                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    </div>
-                </li>
+    <li class="component-item">
+        <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+            <div class="cds--aspect-ratio--object">
+                <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--blue" id="tag-121">
+                    <span title="Tested" class="cds--tag__label cds--tag--blue" dir="auto">Log</span>
+                </div>
+                <a class="component-item__link" href="{{ url_for('users.login') }}">
+                    <p class="component-name">Log In<br>
+                        <br>Create your detail estimate, export and share.</p>
 
-                <li class="component-item">
-                        <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--4x4"><div class="cds--aspect-ratio--object">
+                </a>
+                <div class="cds--resource-card__icon--action">
+                    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                        <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                        <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </li>
 
-                                <p class="component-name"> Reach us @ <br>
-                                    wuarpsdesigns@gmail.com<br>
-                                    <br>in case you need any <br>
-                                    help reach us or contact <br>
-                                    us</p>
 
-                        </div>
-                        </div>
-                    </li>
 
-    </ul>
+    <li class="component-item">
+        <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+            <div class="cds--aspect-ratio--object">
+
+                <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--purple" id="tag-121">
+                    <span title="Tested" class="cds--tag__label cds--tag--purple" dir="auto">help</span>
+                </div>
+
+                    <p class="component-name">Contact<br>
+                        <br>Reach us @ <br>
+                                wuarpsdesigns@gmail.com<br>
+                                <br>in case you need any <br>
+                                help reach us or contact <br></p>
+            </div>
+        </div>
+    </li>
+</ul>
+
 
 
     {% endif %}
