@@ -1,0 +1,186 @@
+{% extends "main/layout.html" %}
+
+{% block additional_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+{% endblock %}
+
+{% block main_content %}
+    {% if current_user.is_authenticated %}
+         {% if current_user.role == "admin" %}
+
+      <ul class="component-overview">
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="{{ url_for('admins.user_roles') }}">
+                            <p class="component-name">Users Details<br>
+                                <br>Check on User Details and Roles | Current Users: {% if user_count %} {{ user_count }} {% endif %} </p>
+                        </a>
+                        <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+                </li>
+
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="#">
+                           <p class="component-name"> Project Stats <br>
+                               <br>
+                               {% if cost_by_category %}
+                                   {% for category, cost in cost_by_category %}
+                                       <br>{{ category }}: {{ cost }}
+                                   {% endfor %}
+                               {% endif %}
+                           </p>
+                        </a>
+
+                          <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+
+                </li>
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--3x3"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="#">
+                            <p class="component-name"> Reach Us<br>
+                                <br>in case you need any help reach us or contact us</p>
+                        </a>
+                    </div>
+                    </div>
+                </li>
+
+            </ul>
+
+         <div class="row">
+           <div class="cds--row resource-card-group">
+
+                <div class="Grid-module--column--FvUep cds--no-gutter-sm cds--col-md-4 cds--col-lg-4">
+                    <div class="cds--resource-card">
+                        <div class="cds--aspect-ratio cds--aspect-ratio--2x1">
+                            <div class="cds--aspect-ratio--object">
+                                <a href="#" class="cds--tile cds--tile--clickable">
+                                    <h5 class="cds--resource-card__subtitle"><strong>{{ home_item.name }} Home project</strong></h5>
+                                    <h2>The Target date for this home is: <br> {{ home_item.target_date }}<br>
+                                         Current Cost Estimate: {{ total_cost_estimate|float|int|round }}
+                                        <br>
+                                        <br>
+                                        Target Budget: {{ home.desired_budget }}
+                                        <br>
+                                        <br>
+                                        Current Actual Cost: {{ actual_cost|float|int|round }}
+                                    </h2>
+                                    <br>
+                                    <br>
+                                    <br>
+
+
+
+                                    <div class="cds--resource-card__icon--action">
+                                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                        <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                        <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                                    </svg>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+         <div class="row">
+                <div class="col-md-3"></div>
+
+                    <div class="card text-center" style="width: 25rem;">
+                      <div class="card-body">
+
+
+                        <a class="cds--btn cds--btn--primary" href="{{ url_for('projects.new_item_to_admin_project', home_item=home_item.id) }}"class="btn btn-primary">Add Project Items</a>
+                      </div>
+                    </div>
+
+                </div>
+
+        <hr>
+
+          <div class="cds--data-table-container">
+              <div class="cds--data-table-header">
+                <h5 class="cds--data-table-header__title" id="tc-112-title">Review your Project details</h5>
+                  <br>
+
+                <p class="cds--data-table-header__description" id="tc-112-description"></p>
+              </div>
+
+             <div role="search" aria-label="Search" class="cds--search cds--search--md">
+                  <div aria-labelledby="search-1" class="cds--search-magnifier">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="cds--search-magnifier-icon">
+                          <path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path>
+                      </svg>
+                  </div>
+
+                  <input class="cds--search-input" type="text" id="searchInput" placeholder="Search...">
+
+                  <button aria-label="Clear search input" class="cds--search-close cds--search-close--hidden" title="Clear search input" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg></button></div>
+             </div>
+
+           <table aria-labelledby="tc-112-title" class="cds--data-table cds--data-table--lg" id="dataTable">
+              <thead>
+                <tr>
+                  <th scope="col"><div class="cds--table-header-label">Category | Action</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Provider</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Target Date</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Estimate | Actual</div></th>
+                    <th scope="col"><div class="cds--table-header-label">Action</div></th>
+
+                </tr>
+              </thead>
+                 <tbody aria-live="polite">
+                    {% for i in project_items %}
+
+                        <td scope="col"><strong>{{ i.category }}</strong> <small> {{ i.action }} </small></td>
+                        <td scope="col">{{ i.provider }}</td>
+                        <td scope="col">{{ i.target_date }}</td>
+
+                        <td scope="col">
+                            {{ i.cost_estimate|float|int|round }} |
+                            <strong>
+                              {% if i.actual_cost < i.cost_estimate|round %}
+                                <span style="color: green">{{ i.actual_cost|float|int|round }}</span>
+                              {% else %}
+                                <span style="color: red">{{ i.actual_cost|float|int|round }}</span>
+                              {% endif %}
+                            </strong>
+                        </td>
+                         <td scope="col">
+                             <a href="{{ url_for('projects.update_project_item', id=i.id) }}" class="btn btn-dark">Edit</a>
+                             <a href="{{ url_for('projects.delete_project_item', id=i.id) }}">
+                             <center>Delete</center></a>
+                          </td>
+                        </tbody>
+
+
+                            {% endfor %}
+
+                       </table>
+                      </div>
+                     </fieldset>
+                 </form>
+             </div>
+    {% endif %}
+    {% endif %}
+    </div>
+{% endblock main_content %}

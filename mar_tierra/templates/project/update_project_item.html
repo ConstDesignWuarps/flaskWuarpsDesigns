@@ -1,0 +1,172 @@
+{% extends "main/layout.html" %}
+
+{% block additional_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+{% endblock %}
+
+{% block main_content %}
+    {% if current_user.is_authenticated %}
+    <div class="hero">
+    <div class="col-sm-1"></div>
+        <d>Huarpe's Construction & Design</d>
+
+        <br />
+        <br>
+        <div class="col-sm-1"></div>
+
+             <p style="font-size: large">
+                {{ current_user.email }} Add the project items we need to complete this house <br>
+                 <strong>Project Item for </strong></p>
+        </div>
+
+        <div class="col-sm-2"></div>
+             <div class="col-md-10">
+                 <form method="POST" action="{{ url_for('projects.update_project_item', id=id) }}" enctype="multipart/form-data">
+
+
+                     {{ form.hidden_tag() }}
+                     <fieldset class="form-group">
+                         <hr>
+
+                         <div class="col-md-6">
+
+                             <div class="form-group">
+                                {{ form.action.label(class="form-control-label") }}
+                                <p style="font-size: small">
+                                </p>
+                                {% if form.action.errors %}
+                                    {{ form.action(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.action.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.action(class="form-control form-control-lg") }}
+                                {% endif %}
+                             </div>
+
+                            <div class="form-group">
+                            {{ form.category.label(class="form-control-label") }}
+                            <p style="font-size: small">
+                            </p>
+                            {% if form.category.errors %}
+                                {{ form.category(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.category.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.category(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+
+                         <div class="form-group">
+                            {{ form.description.label(class="form-control-label") }}
+                            <p style="font-size: small">
+                            </p>
+                            {% if form.description.errors %}
+                                {{ form.description(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.description.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.description(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+
+
+                     </div>
+
+                         <div class="col-md-5">
+
+                         <div class="form-group">
+                            {{ form.provider.label(class="form-control-label") }}
+                            <p style="font-size: small">
+                            </p>
+                            {% if form.provider.errors %}
+                                {{ form.provider(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.provider.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.provider(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                         <div class="form-group">
+                            {{ form.target_date.label(class="form-control-label") }}
+                            <p style="font-size: small">
+                            </p>
+                            {% if form.target_date.errors %}
+                                {{ form.target_date(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.target_date.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.target_date(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                         <div class="form-group">
+                            {{ form.cost_estimate.label(class="form-control-label") }}
+                            <p style="font-size: small">
+                            </p>
+                            {% if form.cost_estimate.errors %}
+                                {{ form.cost_estimate(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.cost_estimate.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.cost_estimate(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                         <div class="form-group">
+                            {{ form.actual_cost.label(class="form-control-label") }}
+                            <p style="font-size: small">
+                            </p>
+                            {% if form.actual_cost.errors %}
+                                {{ form.actual_cost(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.actual_cost.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.actual_cost(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                     </div>
+
+                     </fieldset>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary", value="submit_button") }}
+
+
+            </div>
+        </form>
+     <div class="border-top pt-3">
+
+    </div>
+    </div>
+     </div>
+ </div>
+ <hr>
+
+{% endif %}
+</div>
+{% endblock main_content %}

@@ -1,0 +1,235 @@
+{% extends "main/layout.html" %}
+
+{% block additional_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+{% endblock %}
+
+{% block main_content %}
+    {% if current_user.is_authenticated %}
+         {% if current_user.role == "admin" %}
+             <ul class="component-overview">
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="{{ url_for('admins.index') }}">
+                            <p class="component-name">Adming Console<br>
+                                <br>Get back and Review pendings and links </p>
+                        </a>
+                        <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+                </li>
+             </ul>
+             <br>
+
+             <h2 style="font-size: large">{{ current_user.email }} Add the project items we need to complete this house <br></h2>
+
+     <!-- Add Table Here -->
+             <form class="cds--form" method="POST" action="{{ url_for('projects.new_item_to_admin_project', home_item=current_home_id) }}" enctype="multipart/form-data">
+                 {{ form.hidden_tag() }}
+                    <div class="cds--stack-vertical cds--stack-scale-7">
+
+                            <fieldset class="form-group">
+
+                                <div class="form-group">
+                                            {{ form.action.label(class="cds--label") }}
+                                            {% if form.action.errors %}
+                                                {{ form.action(class="form-control form-control-lg is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.action.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.action(class="cds--text-input cds--text-input--md") }}
+                                        {% endif %}
+                                 </div>
+
+                                <div class="form-group">
+                                    {{ form.category.label(class="cds--label") }}
+                                    <p style="font-size: small">
+                                    </p>
+                                    {% if form.category.errors %}
+                                        {{ form.category(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.category.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.category(class="cds--text-input cds--text-input--md") }}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.description.label(class="cds--label") }}
+                                    <p style="font-size: small">
+                                    </p>
+                                    {% if form.description.errors %}
+                                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.description.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.description(class="cds--text-input cds--text-input--md") }}
+                                    {% endif %}
+                                </div>
+
+
+                                <div class="form-group">
+                                    {{ form.provider.label(class="cds--label") }}
+                                    <p style="font-size: small">
+                                    </p>
+                                    {% if form.provider.errors %}
+                                        {{ form.provider(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.provider.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.provider(class="cds--text-input cds--text-input--md") }}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                            {{ form.target_date.label(class="cds--label") }}
+                                            <p style="font-size: small">
+                                            </p>
+                                            {% if form.target_date.errors %}
+                                                {{ form.target_date(class="form-control form-control-lg is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.target_date.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.target_date(class="cds--text-input cds--text-input--md") }}
+                                            {% endif %}
+                                        </div>
+
+                                <div class="form-group">
+                                    {{ form.cost_estimate.label(class="cds--label") }}
+                                    <p style="font-size: small">
+                                    </p>
+                                    {% if form.cost_estimate.errors %}
+                                        {{ form.cost_estimate(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.cost_estimate.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.cost_estimate(class="cds--text-input cds--text-input--md") }}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.actual_cost.label(class="cds--label") }}
+                                    <p style="font-size: small">
+                                    </p>
+                                    {% if form.actual_cost.errors %}
+                                        {{ form.actual_cost(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.actual_cost.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.actual_cost(class="cds--text-input cds--text-input--md") }}
+                                    {% endif %}
+                                </div>
+
+                                <br>
+
+                                <div class="form-group">
+                                 {{ form.submit(class="cds--btn cds--btn--primary", value="submit_button") }}
+                             </div>
+
+
+                            </fieldset>
+                        </div>
+             </form>
+
+             <hr>
+
+
+
+
+                <form method="POST">
+                    <input type="hidden" name="action" value="search">
+                      <label for="keyword">Search:</label>
+                      <input class="cds--text-input cds--text-input--md" type="text" id="keyword" name="keyword" required>
+                      <br><br>
+                      <label for="zipcode">Zip Code:</label>
+                      <input class="cds--text-input cds--text-input--md" type="text" id="zipcode" name="zipcode" required>
+                      <br><br>
+                     <button class="cds--btn cds--btn--primary" type="submit" name="submit" value="search">Search</button>
+                </form>
+                        <br>
+
+         {% endif %}
+
+        <hr>
+
+    <h2>Top 10 search results:</h2>
+    <br>
+    {% if results %}
+        <div class="cds--data-table-container">
+              <div class="cds--data-table-header">
+                <h5 class="cds--data-table-header__title" id="tc-112-title">Review your Project details</h5>
+                  <br>
+
+                <p class="cds--data-table-header__description" id="tc-112-description"></p>
+              </div>
+
+             <div role="search" aria-label="Search" class="cds--search cds--search--md">
+                  <div aria-labelledby="search-1" class="cds--search-magnifier">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="cds--search-magnifier-icon">
+                          <path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path>
+                      </svg>
+                  </div>
+
+                  <input class="cds--search-input" type="text" id="searchInput" placeholder="Search...">
+
+                  <button aria-label="Clear search input" class="cds--search-close cds--search-close--hidden" title="Clear search input" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg></button></div>
+             </div>
+
+           <table aria-labelledby="tc-112-title" class="cds--data-table cds--data-table--lg" id="dataTable">
+              <thead>
+                <tr>
+                  <th scope="col"><div class="cds--table-header-label">Provider Name</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Link</div></th>
+
+                </tr>
+              </thead>
+
+        <tbody aria-live="polite">
+            {% for result in results %}
+                    <tr>
+                        <td>{{ loop.index }}. {{ result['main_name'] }} </td>
+                        <td><a href="{{ result['link'] }}" target="_blank">Link</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+
+
+
+           </div>
+
+      </div>
+
+{% endif %}
+</div>
+{% endblock main_content %}

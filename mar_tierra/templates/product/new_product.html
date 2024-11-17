@@ -1,0 +1,101 @@
+{% extends "main/layout.html" %}
+
+{% block additional_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+{% endblock %}
+
+{% block main_content %}
+    {% if current_user.is_authenticated %}
+    <div class="hero">
+        <d>Huarpe's Construction & Design</d>
+        <br />
+        <br>
+        <div class="col-sm-1"></div>
+
+             <p style="font-size: large">
+                {{ current_user.email }} We want to capture all the details you might want to start on your home.
+            </p>
+        </div>
+
+        <div class="col-sm-3"></div>
+
+             <div class="col-md-5">
+                 <form method="POST" action="#" enctype="multipart/form-data">
+                     {{ form.hidden_tag() }}
+                     <fieldset class="form-group">
+                         <legend class="border-bottom mb-4">
+                             <div class="hero">
+                              <p style="font-size: small">
+
+                             </p>
+                             </div>
+                         </legend>
+
+                         <div class="form-group">
+                            {{ form.name.label(class="form-control-label") }}
+                            <p style="font-size: small">(Choose a product category)
+                            </p>
+                            {% if form.name.errors %}
+                                {{ form.name(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.name(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.description.label(class="form-control-label") }}
+
+                            <p style="font-size: small">(Add any detail or specification to your home base on the )</p>
+
+                            {% if form.description.errors %}
+                                {{ form.description(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.description.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.description(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.target_cost_estimate.label(class="form-control-label") }}
+
+                            <p style="font-size: small">(Add any plan budget or cost are on your plans for this additional )</p>
+
+                            {% if form.target_cost_estimate.errors %}
+                                {{ form.target_cost_estimate(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.target_cost_estimate.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.target_cost_estimate(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+
+                     </fieldset>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+
+            </div>
+        </form>
+     <div class="border-top pt-3">
+
+
+
+    </div>
+    </div>
+             </div>
+        </div>
+    {% endif %}
+    </div>
+{% endblock main_content %}

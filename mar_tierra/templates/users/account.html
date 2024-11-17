@@ -1,0 +1,178 @@
+{% extends "main/layout.html" %}
+{% block title %} Account Update {% endblock %}
+{% block additional_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+
+{% endblock %}
+
+{% block main_content %}
+    {% if current_user.is_authenticated %}
+
+           <br>
+
+<!-- Chat bot Here -->
+    <div class="chat-container">
+            <h3>Chat with Us</h3>
+
+            <div class="chat-input-container">
+                <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        <br>
+        <br>
+
+            <div class="chat-box" id="chat-box">
+                <!-- Messages will be appended here dynamically -->
+            </div>
+        </div>
+
+    <hr>
+        <br>
+
+      <ul class="component-overview">
+          <br>
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="{{ url_for('homes.new_home') }}">
+                            <p class="component-name">New Home<br>
+                                <br>Create, your new home project start from scracth or choose one of our custom designs</p>
+                        </a>
+                        <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+                </li>
+
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="#">
+                           <p class="component-name"> Create Estimates <br>
+                               <br>Browse our catalog and imagine and check what could be your new home
+                           </p>
+                        </a>
+
+                          <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+
+                </li>
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--4x4"><div class="cds--aspect-ratio--object">
+
+                            <p class="component-name"> Reach us @ <br>
+                                wuarpsdesigns@gmail.com<br>
+                                <br>in case you need any <br>
+                                help reach us or contact <br>
+                                us</p>
+
+                    </div>
+                    </div>
+                </li>
+
+
+
+            </ul>
+
+
+      <div class="row">
+       <h2>Check your current home projects by details and explore with us what are the next steps to complete your next dream home</h2>
+          <br>
+      </div>
+
+       {% if homes_count > 0 %}
+           <div class="cds--data-table-container">
+              <div class="cds--data-table-header">
+                <h5 class="cds--data-table-header__title" id="tc-112-title">List of your Home Projects and details</h5>
+                <p class="cds--data-table-header__description" id="tc-112-description"></p>
+              </div>
+
+             <div role="search" aria-label="Search" class="cds--search cds--search--md">
+                  <div aria-labelledby="search-1" class="cds--search-magnifier">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="cds--search-magnifier-icon">
+                          <path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path>
+                      </svg>
+                  </div>
+
+                  <input class="cds--search-input" type="text" id="searchInput" placeholder="Search...">
+
+                  <button aria-label="Clear search input" class="cds--search-close cds--search-close--hidden" title="Clear search input" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg></button></div>
+             </div>
+
+           <table aria-labelledby="tc-112-title" class="cds--data-table cds--data-table--lg" id="dataTable">
+              <thead>
+                <tr>
+                  <th scope="col"><div class="cds--table-header-label">Project Name</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Status</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Target Budget</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Type</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Target Date</div></th>
+
+                </tr>
+              </thead>
+
+               <tbody aria-live="polite">
+                {% for i in homes %}
+                    <tr>
+                    <td scope="col"><a href="{{ url_for('homes.home_detail', id=i.id) }}">{{ i.name }}</a></td>
+                    <td scope="col">{{ i.status }}</td>
+                    <td scope="col">${{ i.desired_budget|int|round }} <small>USD</small></td>
+                    <td scope="col">{{ i.type }}</td>
+                    <td scope="col">{{ i.target_date }}</td>
+                    </tr>
+
+                {% endfor %}
+               </tbody>
+           </table>
+  </div>
+</div>
+
+<script>
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  const dataTable = document.getElementById('dataTable');
+
+  searchInput.addEventListener('keyup', () => {
+    const filter = searchInput.value.toLowerCase();
+    const rows = dataTable.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName('td');
+      let shouldHide = true;
+
+      for (let j = 0; j < cells.length; j++) {
+        const cell = cells[j];
+
+        if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+          shouldHide = false;
+          break;
+        }
+      }
+
+      rows[i].style.display = shouldHide ? 'none' : '';
+    }
+  });
+
+</script>
+       {% else %}
+           <div class="row">
+           <br>
+           <h2>Still don't have any project start right here,...</h2>
+           <small>Start a Project from Scratch chose above the "New Home" option and start your journey to your next dream home</small>
+           <br>
+
+        {% endif %}
+    {% endif %}
+{% endblock main_content %}
+

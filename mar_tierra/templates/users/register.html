@@ -1,0 +1,84 @@
+{% extends "main/layout.html" %}
+{% block additional_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+{% endblock %}
+
+{% block main_content %}
+      <div class="row">
+            <h2>Not yet Register you are in the right Place!</h2>
+        </div>
+
+    <div class="row">
+        <small style="font-size: small">Live in luxury without breaking the bank: rich country-style living</small>
+    </div>
+
+
+            <div class="row">
+             <form class="cds--form" method="POST" action="">
+                 {{ form.hidden_tag() }}
+             <div class="cds--stack-vertical cds--stack-scale-7">
+                 <div class="cds--form-item cds--text-input-wrapper">
+                     <fieldset class="form-group">
+                         <div class="form-group">
+                             {{ form.email.label(class="cds--label") }}
+
+                                    {% if form.email.errors %}
+                                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.email.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        <br>
+                                        {{ form.email(class="cds--text-input cds--text-input--md") }}
+                                    {% endif %}
+                                </div>
+
+                            <div class="form-group">
+                                {{ form.password.label(class="cds--label") }}
+                                {% if form.password.errors %}
+                                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.password.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.password(class="cds--text-input cds--text-input--md") }}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.confirm_password.label(class="cds--label") }}
+                                {% if form.confirm_password.errors %}
+                                    {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.confirm_password.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.confirm_password(class="cds--text-input cds--text-input--md") }}
+                                    <div id="test2-helper-text" class="cds--form__helper-text">
+                                        If you already register login and continue working with your checklist or
+                                        create your first one <a href="{{ url_for('users.login') }}"> Log In </a></div>
+                                {% endif %}
+                            </div>
+
+
+
+                            </fieldset>
+                            <div class="form-group">
+                                <br>
+                                {{ form.submit(class="cds--btn cds--btn--primary") }}
+                                <a href="{{ url_for('main.home') }}" class="cds--btn cds--btn--secondary">Back Home</a>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+{% endblock main_content %}

@@ -1,0 +1,163 @@
+{% extends "main/layout.html" %}
+
+{% block additional_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+{% endblock %}
+
+{% block main_content %}
+    {% if current_user.is_authenticated %}
+
+     <ul class="component-overview">
+
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="#">
+                           <p class="component-name"> Home Catalogs <br>
+                               <br>Browse our catalog and imagine and check what could be your new home
+                           </p>
+                        </a>
+
+                          <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+
+                </li>
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--3x3"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="#">
+                            <p class="component-name"> Reach Us<br>
+                                <br>in case you need any help reach us or contact us</p>
+                        </a>
+                    </div>
+                    </div>
+                </li>
+
+            </ul>
+
+
+        <h2><strong>Petite Design for: </strong><br> {{ current_user }}<strong>{{ homes_items.name }}</strong></h2></d>
+        <br />{% if current_user.is_authenticated %}
+
+        <p style="font-size: medium; alignment: right">
+            Our more minimalist design are the best for quick turn around. Keep working on your project
+            by adding any detail, or create your own petite hotel with multiple homes.
+        </p>
+
+        <br>
+
+            <ul class="component-overview">
+                <li class="component-item" style="width: 21.1rem; height: 15rem; object-fit: cover">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+                        <div class="cds--aspect-ratio--object">
+                            <img src="{{ url_for('static', filename='photos/petite_homes_plans/petite_homes_plans.png') }}" style="width: 30rem; height: 15rem;">
+                        </div>
+                    </div>
+                </li>
+                <li class="component-item" style="width: 21.1rem; height: 15rem; object-fit: cover">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1">
+                        <img src="{{ url_for('static', filename='photos/petite_homes_plans/imageConcept.png') }}" style="width: 30rem; height: 15rem;">
+                    </div>
+                </li>
+            </ul>
+
+
+
+
+                     <!-- Add Table Here -->
+            <div class="cds--data-table-container">
+              <div class="cds--data-table-header">
+                <h5 class="cds--data-table-header__title" id="tc-112-title">Review your Project details</h5>
+                  <br>
+
+                <p class="cds--data-table-header__description" id="tc-112-description"></p>
+              </div>
+
+             <div role="search" aria-label="Search" class="cds--search cds--search--md">
+                  <div aria-labelledby="search-1" class="cds--search-magnifier">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="cds--search-magnifier-icon">
+                          <path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5 C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path>
+                      </svg>
+                  </div>
+
+                  <input class="cds--search-input" type="text" id="searchInput" placeholder="Search...">
+
+                  <button aria-label="Clear search input" class="cds--search-close cds--search-close--hidden" title="Clear search input" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg></button></div>
+             </div>
+
+           <table aria-labelledby="tc-112-title" class="cds--data-table cds--data-table--lg" id="dataTable">
+              <thead>
+                <tr>
+                  <th scope="col"><div class="cds--table-header-label">Project Name</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Status</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Target Budget | Type</div></th>
+                  <th scope="col"><div class="cds--table-header-label">Target Date</div></th>
+                    <th scope="col"><div class="cds--table-header-label">Action</div></th>
+
+                </tr>
+              </thead>
+                 <tbody aria-live="polite">
+                 {% if homes_items %}
+                 {% for i in homes_items %}
+                     <td scope="col"><a href="{{ url_for('homes.home_detail', id=i.id) }}">{{ i.name }}</a></td>
+                     <td scope="col">{{ i.status }}</td>
+                     <td scope="col">${{ i.desired_budget }} <small>USD</small> | {{ i.type }}</td>
+                     <td scope="col">{{ i.target_date }}<em> | Goal</em></td>
+
+
+                        <td scope="col"> <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('homes.home_detail', id=i.id) }}">Edit Project</a> </td>
+
+
+                    </tr>
+                </tbody>
+             {% endfor %}
+                    {% endif %}
+                 </tbody>
+                </table>
+            </div>
+
+          </div>
+</div>
+
+<script>
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  const dataTable = document.getElementById('dataTable');
+
+  searchInput.addEventListener('keyup', () => {
+    const filter = searchInput.value.toLowerCase();
+    const rows = dataTable.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName('td');
+      let shouldHide = true;
+
+      for (let j = 0; j < cells.length; j++) {
+        const cell = cells[j];
+
+        if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+          shouldHide = false;
+          break;
+        }
+      }
+
+      rows[i].style.display = shouldHide ? 'none' : '';
+    }
+  });
+
+</script>
+
+            {% endif %}
+    {% endif %}
+
+
+
+
+{% endblock main_content %}
+

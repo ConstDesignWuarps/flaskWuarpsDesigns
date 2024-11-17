@@ -1,0 +1,123 @@
+{% extends "main/layout.html" %}
+{% block title %} Update Product {% endblock %}
+{% block additional_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design_generals.css') }}">
+{% endblock %}
+
+
+{% block main_content %}
+    {% if current_user.is_authenticated %}
+      <ul class="component-overview">
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="{{ url_for('homes.new_home') }}">
+                            <p class="component-name">New Home<br>
+                                <br>Create, your new home project start from scracth or choose one of our custom designs</p>
+                        </a>
+                        <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+                </li>
+
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--1x1"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="#">
+                           <p class="component-name"> Home Catalogs <br>
+                               <br>Browse our catalog and imagine and check what could be your new home
+                           </p>
+                        </a>
+
+                          <div class="cds--resource-card__icon--action">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    </div>
+
+                </li>
+
+                <li class="component-item">
+                    <div class="cds--aspect-ratio cds--aspect-ratio--align cds--aspect-ratio--3x3"><div class="cds--aspect-ratio--object">
+                        <a class="component-item__link" href="#">
+                            <p class="component-name"> Reach Us<br>
+                                <br>in case you need any help reach us or contact us</p>
+                        </a>
+                    </div>
+                    </div>
+                </li>
+
+            </ul>
+
+    <div class="cds--row resource-card-group">
+
+                <div class="Grid-module--column--FvUep cds--no-gutter-sm cds--col-md-4 cds--col-lg-4">
+                    <div class="cds--resource-card">
+                        <div class="cds--aspect-ratio cds--aspect-ratio--2x1">
+                            <div class="cds--aspect-ratio--object">
+                                <a href="#" class="cds--tile cds--tile--clickable">
+                                    <h5 class="cds--resource-card__subtitle"><strong>{{ home_item.name }} Home project</strong></h5>
+                                    <h2>The Target date for this home is: <br> {{ home_item.target_date }}
+                                        <br>
+                                        <br>
+                                        It is budgeted for USD {{ home_item.desired_budget }}
+                                    </h2>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <small>Choose this option to edit, or check product details chosen for the home project below</small>
+
+                                    <br>
+                                    <br>
+
+                                    <div class="cds--resource-card__icon--action">
+                                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Open resource" width="20" height="20" viewBox="0 0 32 32" role="img">
+                                        <path d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"></path>
+                                        <path d="M20 2L20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2z"></path>
+                                    </svg>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      <div class="row">
+            {% if current_user.role == "admin" %}
+
+                <div class="col-md-9">
+                    <div class="content-section-request">
+                       <h3>User Detail</h3>
+                        <h7><strong>email:</strong> {{ user.email}} | </h7>
+                        <h7><strong>Role: </strong>{{ user.role}} </h7>
+
+                       <div class="" ><p style="margin: 30px 0 0 0;text-align: center;padding: 0;">
+                          <span style="color: #272727;font-family: 'IBM Plex Sans','Helvetica Neue', Helvetica,Arial,Verdana,sans-serif;
+                                       font-size: 11px; mso-line-height-rule: exactly;line-height: 1.8; max-width: 600px;">
+                              <strong>{{ current_user.email }} </strong>if you are sure you want to Delete the User
+                              Please proceed to press Delete <br/>
+                              The User will be eliminated <br/>
+                          </span>
+                       </p>
+
+                    <form action="{{ url_for('users.delete_user', id=user.id) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+
+
+                        <a href="{{ url_for('admins.index') }}" class="btn btn-primary"><span>Back to Admin Console</span></a>
+            {% endif %}
+                    </form>
+                </div>
+            </div>
+            </div>
+        {% endif %}
+{% endblock main_content %}

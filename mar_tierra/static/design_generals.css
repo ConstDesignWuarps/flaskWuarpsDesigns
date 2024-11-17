@@ -1,0 +1,20 @@
+.hero {
+    color: black;
+    alignment: center;
+    font-size: 50px;
+    font-family: "Andale Mono", monospace;
+    padding: 50px 0px;
+    text-align: center;
+    background: white;
+}
+
+.hero .description {
+    color: black;
+    margin-left: 155px;
+    alignment: center;
+    font-size: 20px;
+    font-family: "Andale Mono", monospace;
+    padding: 50px 0px;
+    text-align: center;
+
+}
