@@ -12,19 +12,28 @@
 
 <!-- Chat bot Here -->
     <div class="chat-container">
-            <h3>Chat with Us</h3>
-
-            <div class="chat-input-container">
-                <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        <br>
-        <br>
-
-            <div class="chat-box" id="chat-box">
-                <!-- Messages will be appended here dynamically -->
-            </div>
+    <h3>Chat with Us</h3>
+        <div class="chat-input-container">
+            <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
+            <button onclick="sendMessage()">Send</button>
         </div>
+    <div id="chat-options">
+        <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--purple" id="create-option" onclick="handleOptionClick('create')">
+            <span title="Create" class="cds--tag__label cds--tag--purple" dir="auto">Create</span>
+        </div>
+
+        <div class="cds--tag a11y-status-tag-module--tag--e43ee cds--tag--blue" id="build-option" onclick="handleOptionClick('build')">
+            <span title="Build" class="cds--tag__label cds--tag--blue" dir="auto">Build</span>
+        </div>
+
+    </div>
+    <div id="chat-box">
+        <!-- Messages dynamically appended here -->
+    </div>
+</div>
+
+<!-- Chat bot END -->
+
 
     <hr>
         <br>
