@@ -524,49 +524,76 @@ document.addEventListener('click', function(event) {
 </script>
 
     <!-- Chat bot Here -->
-   <script>
-    // Function to call the Flask /chat route
-    async function sendMessage() {
-    const userInput = document.getElementById("user-input");
-    const chatBox = document.getElementById("chat-box");
-    const message = userInput.value.trim();
+      <script>
+            // Function to handle option clicks
+        async function handleOptionClick(option) {
+            const chatBox = document.getElementById("chat-box");
+            const userMessage = document.createElement("div");
+            userMessage.textContent = `You selected: ${option}`;
+            chatBox.appendChild(userMessage);
 
-    if (!message) {
-        alert("Please type a message.");
-        return;
-    }
+            try {
+                // Fetch the response for the selected option
+                const response = await fetch(`/chat/${option}`, {
+                    method: "GET", // Use GET for option-specific actions
+                });
 
-    // Display user message
-    const userMessage = document.createElement("div");
-    userMessage.textContent = `You: ${message}`;
-    chatBox.appendChild(userMessage);
+                const data = await response.json();
 
-    try {
-        // Fetch response from the server
-        const response = await fetch("/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message }),
-        });
+                // Display bot response
+                const botMessage = document.createElement("div");
+                if (option === "create") {
+                    botMessage.innerHTML = `Great let's create together... <a class="component-item__link" href="#">Click here to create</a>`;
+                } else if (option === "build") {
+                    botMessage.innerHTML = `Let's build your idea... <a class="component-item__link" href="#">Click here to build</a>`;
+                }
+                chatBox.appendChild(botMessage);
+            } catch (error) {
+                console.error("Error:", error);
+                const errorMessage = document.createElement("div");
+                errorMessage.textContent = "Sorry, an error occurred while processing your request.";
+                chatBox.appendChild(errorMessage);
+            }
+        }
 
-        const data = await response.json();
+        // Function to send a normal chat message
+        async function sendMessage() {
+            const userInput = document.getElementById("user-input");
+            const chatBox = document.getElementById("chat-box");
+            const message = userInput.value.trim();
 
-        // Display bot response
-        const botMessage = document.createElement("div");
-        botMessage.textContent = `Bot: ${data.response}`;
-        chatBox.appendChild(botMessage);
-    } catch (error) {
-        console.error("Error:", error);
-        const errorMessage = document.createElement("div");
-        errorMessage.textContent = "Bot: Sorry, an error occurred while processing your request.";
-        chatBox.appendChild(errorMessage);
-    }
+            if (!message) {
+                alert("Please type a message.");
+                return;
+            }
 
-    userInput.value = ""; // Clear input field
-}
+            const userMessage = document.createElement("div");
+            userMessage.textContent = `You: ${message}`;
+            chatBox.appendChild(userMessage);
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message }),
+                });
+
+                const data = await response.json();
+
+                const botMessage = document.createElement("div");
+                botMessage.textContent = `Wuarps AI Assistant: ${data.response}`;
+                chatBox.appendChild(botMessage);
+            } catch (error) {
+                console.error("Error:", error);
+                const errorMessage = document.createElement("div");
+                errorMessage.textContent = "Construction Assistant: Sorry, an error occurred while processing your request.";
+                chatBox.appendChild(errorMessage);
+            }
+
+            userInput.value = ""; // Clear input field
+        }
 
 </script>
-
 
 
            <!-- CONTENT -->
