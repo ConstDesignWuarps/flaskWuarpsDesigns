@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, jsonify
+from flask import render_template, Blueprint, request, jsonify, url_for
 from mar_tierra import db
 from mar_tierra.models import Visit
 import openai
@@ -64,3 +64,13 @@ def chat():
             "show_predefined": predefined_response_flag,
             "error": str(e)
         }), 500
+
+@main.route('/chat/create', methods=['GET'])
+def chat_create():
+    # Return the link for "Create"
+    return jsonify({"link": url_for('homes.new_home')})
+
+@main.route('/chat/build', methods=['GET'])
+def chat_build():
+    # Placeholder for "Build" link
+    return jsonify({"link": "https://example.com/build"})
