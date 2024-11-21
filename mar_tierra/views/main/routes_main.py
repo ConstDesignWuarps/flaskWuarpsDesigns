@@ -28,18 +28,51 @@ def home():
     return render_template('main/home.html', ip_address=ip_address, consent_given=visit.consent_given)
 
 
-# Chat route with updated OpenAI API usage
+@main.route('/chat/create', methods=['GET'])
+def chat_create():
+    # Return the link for "Create"
+    return jsonify({"link": url_for('homes.new_home')})
+
+
+@main.route('/chat/build', methods=['GET'])
+def chat_build():
+    # Placeholder for "Build" link
+    return jsonify({"link": "https://example.com/build"})
+
+
+CONSTRUCTION_KEYWORDS = ["building", "construction", "architecture", "blueprint", "foundation",
+                         "materials", "renovation", "carpenty", "desing",'wood','materials','garden',
+                         'framework','woodwork']
+
+# Predefined keywords and greetings
+GREETINGS = ["hi", "hello", "hey", "hola"]
+
 @main.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
-    user_message = data.get("message", "")
+    user_message = data.get("message", "").strip().lower()
 
-    # Predefined response flag
+    # Check if user message is empty
     predefined_response_flag = not bool(user_message)
 
     try:
-        # Updated API call for OpenAI with the latest syntax
-        if user_message:
+        # If message is empty, return a predefined response
+        if predefined_response_flag:
+            return jsonify({
+                "response": "Please type a message.",
+                "show_predefined": predefined_response_flag
+            })
+
+        # Check if the message is a greeting
+        if any(greeting in user_message for greeting in GREETINGS):
+            return jsonify({
+                "response": "Hello! How can I assist you with your construction-related queries?",
+                "show_predefined": False
+            })
+
+        # Check for construction-related keywords
+        if any(keyword in user_message for keyword in CONSTRUCTION_KEYWORDS):
+            # Call OpenAI API for construction-related queries
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -48,12 +81,15 @@ def chat():
                 ]
             )
             bot_reply = response.choices[0].message.content.strip()
-        else:
-            bot_reply = ""
+            return jsonify({
+                "response": bot_reply,
+                "show_predefined": False
+            })
 
+        # Fallback for non-construction-related queries
         return jsonify({
-            "response": bot_reply,
-            "show_predefined": predefined_response_flag
+            "response": "Sorry, that's not a construction-related question. Please try ChatGPT for other topics.",
+            "show_predefined": False
         })
 
     except Exception as e:
@@ -64,13 +100,3 @@ def chat():
             "show_predefined": predefined_response_flag,
             "error": str(e)
         }), 500
-
-@main.route('/chat/create', methods=['GET'])
-def chat_create():
-    # Return the link for "Create"
-    return jsonify({"link": url_for('homes.new_home')})
-
-@main.route('/chat/build', methods=['GET'])
-def chat_build():
-    # Placeholder for "Build" link
-    return jsonify({"link": "https://example.com/build"})
