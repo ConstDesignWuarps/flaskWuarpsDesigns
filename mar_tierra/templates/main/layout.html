@@ -105,7 +105,8 @@
     <div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper">
         <div class="Layout-module--layout--KkrKV">
             <header aria-label="Header" class="cds--header Header-module--header--GJDvk">
-                <a class="Header-module--headerName--01F2z" href="/"><span>Wuarps Construction & Design</span></a>
+                <a class="Header-module--headerName--01F2z" href="/"> <img src="{{ url_for('static', filename='photos/design_02.png') }}"
+                        style="width: 5rem; height: 3.5rem; position: relative; left: 1rem;"></a>
             </header>
         </div>
     </div>
@@ -410,9 +411,25 @@
 
       <!-- Title Content -->
     <main id="main-content" aria-hidden="false" class="container container--g10">
-        <div class="PageHeader-module--page-header--NqfPe PageHeader-module--with-tabs--vbQ-W">
-            <div class="cds--grid"><div class="cds--row"><div class="cds--col-lg-12">
-                <h1 id="page-title" class="PageHeader-module--text--Er2EO">Wuarps Construction & Design</h1>
+        <div class="PageHeader-module--page-header--NqfPe PageHeader-module--with-tabs--vbQ-W"  style="background: white">
+            <div class="cds--grid" style="background: white">
+                <div class="cds--row">
+                    <div class="cds--col-lg-12">
+
+                        <img src="{{ url_for('static', filename='photos/design_01.png') }}"
+                        style="width: 7rem; height: 5rem; position: relative; left: 20rem;">
+
+                        <h1 id="page-title" class="PageHeader-module--text--Er2EO" style="color: #0c0715; font-family: 'Californian FB', serif;position: relative; left: 15rem;">
+                           WUARPE
+                            <p><span style="display: block; font-size: 0.8em; color: #0c0715;position: relative; left: 5rem;">
+                            CONSTRUCTION
+                           </span></p>
+                            <p><span style="display: block; font-size: 0.8em; color: #0c0715;position: relative; left: 6.5rem;">
+                            DESIGN
+                           </span></p>
+                       </h1>
+
+
             </div>
             </div>
             </div>
@@ -523,8 +540,9 @@ document.addEventListener('click', function(event) {
 });
 </script>
 
-    <!-- Chat bot Here -->
-      <script>
+
+<!-- Chat bot Here -->
+           <script>
             // Function to handle option clicks
         async function handleOptionClick(option) {
             const chatBox = document.getElementById("chat-box");
