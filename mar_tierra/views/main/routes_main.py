@@ -42,7 +42,7 @@ def chat_build():
 
 CONSTRUCTION_KEYWORDS = ["building", "construction", "architecture", "blueprint", "foundation",
                          "materials", "renovation", "carpenty", "desing",'wood','materials','garden',
-                         'framework','woodwork']
+                         'framework','woodwork', 'house', 'home']
 
 # Predefined keywords and greetings
 GREETINGS = ["hi", "hello", "hey", "hola"]
