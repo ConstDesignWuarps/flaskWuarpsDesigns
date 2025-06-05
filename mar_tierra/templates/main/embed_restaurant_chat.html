@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Assistant</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #ffffff, #e0e8f9);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding-top: 40px;
+    }
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+    h2 {
+      font-size: 1.8rem;
+      margin: 0 0 20px;
+    }
+    .chat-card {
+      width: 90%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #f9fbff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #ffffff;
+      padding: 10px 16px;
+      border-bottom: 1px solid #e1e4e8;
+      font-weight: 600;
+    }
+    .chat-box {
+      flex-grow: 1;
+      padding: 16px;
+      height: 300px;
+      overflow-y: auto;
+      font-size: 0.95rem;
+    }
+    .chat-box p {
+      margin: 0.5em 0;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #e1e4e8;
+      padding: 10px;
+      background: #fff;
+    }
+    .chat-input input {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #2684ff;
+      border-radius: 8px;
+      outline: none;
+    }
+    .chat-input button {
+      margin-left: 10px;
+      padding: 10px 14px;
+      background: #2684ff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Good Morning {{ "11:58 AM" }}</h1>
+  <h2>Rest Name</h2>
+
+  <div class="chat-card">
+    <div class="chat-header">RPM Assistant</div>
+    <div id="chatbox" class="chat-box"></div>
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type something..." />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const chatbox = document.getElementById('chatbox');
+      const message = input.value.trim();
+      if (!message) return;
+
+      chatbox.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+      input.value = '';
+
+      const res = await fetch("/restaurant/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.json();
+      chatbox.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
