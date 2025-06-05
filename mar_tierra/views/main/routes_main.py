@@ -107,3 +107,30 @@ def chat():
 def embed_chat():
     return render_template("main/embed_chat.html")
 
+
+@main.route("/embed/restaurant", methods=["GET"])
+def embed_restaurant_chat():
+    return render_template("main/embed_restaurant_chat.html")
+
+@main.route("/restaurant/chat", methods=["POST"])
+def restaurant_chat():
+    data = request.get_json()
+    user_message = data.get("message", "").strip().lower()
+
+    try:
+        if not user_message:
+            return jsonify({"response": "Please enter a message."})
+
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant for a restaurant website. Answer questions about menus, hours, and services."},
+                {"role": "user", "content": user_message}
+            ]
+        )
+        bot_reply = response.choices[0].message.content.strip()
+        return jsonify({"response": bot_reply})
+    except Exception as e:
+        return jsonify({"response": "Sorry, something went wrong.", "error": str(e)}), 500
+
+
