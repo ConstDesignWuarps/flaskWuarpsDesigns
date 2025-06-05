@@ -41,8 +41,9 @@ def chat_build():
 
 
 CONSTRUCTION_KEYWORDS = ["building", "construction", "architecture", "blueprint", "foundation",
-                         "materials", "renovation", "carpenty", "desing",'wood','materials','garden',
-                         'framework','woodwork', 'house', 'home']
+                         "materials", "renovation", "carpenty", "design",'wood','materials','garden',
+                         'framework','woodwork', 'house', 'home', 'carpenter', 'Floor', 'Architect', 
+                        'permit']
 
 # Predefined keywords and greetings
 GREETINGS = ["hi", "hello", "hey", "hola"]
@@ -100,3 +101,9 @@ def chat():
             "show_predefined": predefined_response_flag,
             "error": str(e)
         }), 500
+
+
+@main.route("/embed/chat", methods=["GET"])
+def embed_chat():
+    return render_template("main/embed_chat.html")
+
