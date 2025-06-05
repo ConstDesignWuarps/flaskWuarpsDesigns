@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Embedded Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 10px; margin: 0; }
+    #chatbox { width: 100%; height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    input[type="text"] { width: 80%; padding: 8px; }
+    button { padding: 8px 12px; }
+  </style>
+</head>
+<body>
+  <div id="chatbox"></div>
+  <input type="text" id="messageInput" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const chatbox = document.getElementById('chatbox');
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
+
+      chatbox.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+      input.value = '';
+
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage })
+        });
+
+        const data = await response.json();
+        chatbox.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+        chatbox.scrollTop = chatbox.scrollHeight;
+      } catch (err) {
+        chatbox.innerHTML += `<p><em>Error sending message</em></p>`;
+      }
+    }
+  </script>
+</body>
+</html>
