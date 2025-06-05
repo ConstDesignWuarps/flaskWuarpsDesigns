@@ -5,107 +5,110 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Restaurant Assistant</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #e0e8f9);
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-      height: 100vh;
-    }
+   body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #ffffff, #e0e8f9);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 100vh;
+}
 
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      width: 100%;
-      max-width: 800px;
-      padding: 20px;
-      box-sizing: border-box;
-    }
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Push header to top, input to bottom */
+  width: 100%;
+  max-width: 800px;
+  min-height: 100vh; /* Ensure full height */
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-    .header {
-      margin-bottom: 10px;
-    }
+.header {
+  padding-top: 10px;
+}
 
-    .header div {
-      font-size: 0.9rem;
-      color: #555;
-    }
+.header div {
+  font-size: 0.9rem;
+  color: #555;
+}
 
-    .header h2 {
-      margin: 4px 0 2px;
-    }
+.header h2 {
+  margin: 4px 0 2px;
+}
 
-    .header p {
-      margin: 0;
-      font-size: 0.95rem;
-      color: #333;
-    }
+.header p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #333;
+}
 
-    .chat-box {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 10px 0;
-      margin-bottom: 10px;
-    }
+.chat-box {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
-    .message {
-      max-width: 70%;
-      padding: 10px 14px;
-      margin: 6px 0;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      white-space: pre-wrap;
-    }
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
 
-    .user {
-      background: #e0e0e0;
-      align-self: flex-end;
-      border-top-right-radius: 0;
-    }
+.user {
+  background: #e0e0e0;
+  align-self: flex-end;
+  border-top-right-radius: 0;
+}
 
-    .bot {
-      background: #ffffff;
-      border: 1px solid #d9e2ef;
-      align-self: flex-start;
-      border-top-left-radius: 0;
-    }
+.bot {
+  background: #ffffff;
+  border: 1px solid #d9e2ef;
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
 
-    .input-bar {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      background: white;
-      border-top: 1px solid #ddd;
-      border-radius: 14px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
+.input-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: white;
+  border-top: 1px solid #ddd;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
 
-    .input-bar input {
-      flex: 1;
-      border: 2px solid #2684ff;
-      border-radius: 16px;
-      padding: 10px 14px;
-      font-size: 1rem;
-      outline: none;
-    }
+.input-bar input {
+  flex: 1;
+  border: 2px solid #2684ff;
+  border-radius: 16px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  outline: none;
+}
 
-    .input-bar button {
-      margin-left: 10px;
-      background: #2684ff;
-      color: white;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 50%;
-      font-size: 1rem;
-      cursor: pointer;
-    }
+.input-bar button {
+  margin-left: 10px;
+  background: #2684ff;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-    .input-bar button:hover {
-      background: #1c6fd8;
-    }
+.input-bar button:hover {
+  background: #1c6fd8;
+}
+
   </style>
 </head>
 <body>
