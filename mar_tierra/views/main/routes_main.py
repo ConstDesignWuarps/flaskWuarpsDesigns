@@ -113,11 +113,15 @@ def embed_chat():
 Rest
 #--------------------------------------------
 
+def embed_chat():Add commentMore actions
+    return render_template("main/embed_chat.html")
+
+
 @main.route("/embed/restaurant", methods=["GET"])
 def embed_restaurant_chat():
     return render_template("main/embed_restaurant_chat.html")
 
-@main.route("/restaurant/chat", methods=["POST"])Add commentMore actions
+@main.route("/restaurant/chat", methods=["POST"])
 def restaurant_chat():
     data = request.get_json()
     user_message = data.get("message", "").strip().lower()
@@ -137,4 +141,3 @@ def restaurant_chat():
         return jsonify({"response": bot_reply})
     except Exception as e:
         return jsonify({"response": "Sorry, something went wrong.", "error": str(e)}), 500
-
