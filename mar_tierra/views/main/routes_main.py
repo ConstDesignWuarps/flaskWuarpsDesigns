@@ -150,13 +150,14 @@ def astro_fortune():
         week_of_year = datetime.datetime.utcnow().isocalendar()[1]
 
         system_prompt = (
-            "You are a whimsical and elegant astrologer bot. Based on the user's birthdate "
-            "and the current week of the year, give a mystical explanation of why things may "
-            "not be going well, and then provide a poetic, elegant sentence of encouragement. "
-            "Also suggest a lucky charm or totem (with a name like 'golden cat' or 'obsidian feather')."
+            "Eres un místico astrólogo que habla únicamente en español. Según la fecha de nacimiento del usuario "
+            "y la semana actual, debes explicar por qué las cosas podrían estar yendo mal para él/ella esta semana. "
+            "Después, brinda una frase elegante de aliento, y sugiere un totem de la suerte (como 'águila dorada' o 'pluma de obsidiana'). "
+            "La respuesta debe tener tres partes: 1) justificación astral, 2) frase de consuelo, 3) Una Imagen totem sugerido.
+            Para el punto 3 la Imagen debe ser super simple en blanco y negro solo un simobolo pagano"
         )
 
-        user_prompt = f"Birthdate: {birthdate_str}, Current Week: {week_of_year}"
+        user_prompt = f"Fecha de nacimiento: {birthdate_str}, semana actual: {week_of_year}"
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -166,20 +167,19 @@ def astro_fortune():
             ]
         )
 
-        message = response.choices[0].message.content.strip()
+        content = response.choices[0].message.content.strip()
 
-        # Optionally extract image keyword
-        lucky_charm = None
-        for line in message.split('\n'):
-            if "lucky charm" in line.lower() or "totem" in line.lower():
-                lucky_charm = line
-                break
+        # Extract the totem suggestion
+        lines = content.split("\n")
+        totem_line = next((line for line in lines if "totem" in line.lower() or "tótem" in line.lower()), "")
+        totem_name = totem_line.split(":")[-1].strip().lower().replace(" ", "_").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+
+        charm_url = f"/static/totems/{totem_name}.png" if totem_name else None
 
         return jsonify({
-            "fortune": message,
-            "charm_image_url": f"/static/totems/{lucky_charm.lower().replace(' ', '_')}.png" if lucky_charm else None
+            "fortune": content,
+            "charm_image_url": charm_url
         })
 
     except Exception as e:
-        return jsonify({"response": "Something went wrong.", "error": str(e)}), 500
-
+        return jsonify({"response": "Ocurrió un error astral.", "error": str(e)}), 500
