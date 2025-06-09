@@ -1,9 +1,11 @@
-from flask import render_template, Blueprint, request, jsonify, url_for
+from flask import render_template, Blueprint, request, jsonify, url_for, request
 from mar_tierra import db
 from mar_tierra.models import Visit
 import openai
 import os
 from dotenv import load_dotenv
+import datetime
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -133,4 +135,51 @@ def restaurant_chat():
     except Exception as e:
         return jsonify({"response": "Sorry, something went wrong.", "error": str(e)}), 500
 
+
+@main.route("/embed/astro", methods=["GET"])
+def embed_astro_chat():
+    return render_template("main/embed_astro_chat.html")
+
+@main.route("/astro/fortune", methods=["POST"])
+def astro_fortune():
+    data = request.get_json()
+    birthdate_str = data.get("birthdate", "").strip()
+
+    try:
+        birthdate = datetime.datetime.strptime(birthdate_str, "%d-%m-%Y")
+        week_of_year = datetime.datetime.utcnow().isocalendar()[1]
+
+        system_prompt = (
+            "You are a whimsical and elegant astrologer bot. Based on the user's birthdate "
+            "and the current week of the year, give a mystical explanation of why things may "
+            "not be going well, and then provide a poetic, elegant sentence of encouragement. "
+            "Also suggest a lucky charm or totem (with a name like 'golden cat' or 'obsidian feather')."
+        )
+
+        user_prompt = f"Birthdate: {birthdate_str}, Current Week: {week_of_year}"
+
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ]
+        )
+
+        message = response.choices[0].message.content.strip()
+
+        # Optionally extract image keyword
+        lucky_charm = None
+        for line in message.split('\n'):
+            if "lucky charm" in line.lower() or "totem" in line.lower():
+                lucky_charm = line
+                break
+
+        return jsonify({
+            "fortune": message,
+            "charm_image_url": f"/static/totems/{lucky_charm.lower().replace(' ', '_')}.png" if lucky_charm else None
+        })
+
+    except Exception as e:
+        return jsonify({"response": "Something went wrong.", "error": str(e)}), 500
 
