@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from mar_tierra.config import Config
 from flask_bcrypt import Bcrypt
-from flask_cors import CORS
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -36,7 +35,5 @@ def create_app(config_class=Config):
     app.register_blueprint(projects)
     app.register_blueprint(homes)
     app.register_blueprint(products)
-
-    CORS(app)
 
     return app
