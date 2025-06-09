@@ -108,6 +108,11 @@ def embed_chat():
 def embed_restaurant_chat():
     return render_template("main/embed_restaurant_chat.html")
 
+
+@main.route("/embed/walter", methods=["GET"])
+def embed_walter_chat():
+    return render_template("main/embed_walter_chat.html")
+
 #--------------------------------------------
 # Restaurant chatbot
 #--------------------------------------------
