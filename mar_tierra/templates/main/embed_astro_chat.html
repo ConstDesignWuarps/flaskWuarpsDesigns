@@ -1,48 +1,65 @@
-<!-- templates/main/embed_astro_chat.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Proyección Astral</title>
+  <link rel="stylesheet" href="https://unpkg.com/carbon-components/css/carbon-components.min.css">
+  <style>
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #eef4ff);
+      padding: 2rem;
+    }
 
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Astrology</title>
-      <link rel="stylesheet" href="all_view.css">
-    </head>
+    .astro-box {
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-<main id="main-content" class="cds--grid" style="padding-top: 4rem;">
-  <div class="cds--row">
+    .astro-response {
+      margin-top: 2rem;
+      padding: 1rem;
+      border-left: 4px solid #0f62fe;
+      background-color: #f4f4f4;
+      line-height: 1.7;
+      white-space: normal;
+    }
 
-    <!-- LEFT: Message -->
-    <div class="cds--col-lg-8">
-      <h2 class="cds--type-expressive-heading-04" style="margin-bottom: 1rem;">
-        Sabemos que sos perfecto Corazonn. <br>Pero también sabemos que Astro Celestial está obstruyendo tu camino esta semana.
-      </h2>
-      <p class="cds--type-body-long-01">
-        Danos tu fecha y te revelaremos la verdad, también te daremos una bendición astral... ya tú sabes...
-      </p>
-    </div>
+    button.cds--btn {
+      background-color: #0f62fe;
+    }
 
-    <!-- RIGHT: Form + Result -->
-    <div class="cds--col-lg-8">
-      <form method="POST" class="cds--form" style="margin-top: 2rem;">
-        <div class="cds--form-item">
-          <label for="birthdate" class="cds--label">Fecha de Nacimiento</label>
-          <input id="birthdate" name="birthdate" type="text" placeholder="DD-MM-AAAA" class="cds--text-input" required>
-        </div>
-        <button type="submit" class="cds--btn cds--btn--primary" style="margin-top: 1rem;">
-          Proyección Astral
-        </button>
-      </form>
+    strong {
+      color: #8a3ffc;
+    }
 
-      {% if result %}
+    em {
+      color: #0043ce;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="astro-box">
+    <form method="POST">
       <div class="cds--form-item">
-        <p id="feedback" class="cds--type-body-long-01" style="margin-top: 2rem; white-space: normal; line-height: 1.6;">
-          {{ result | safe }}
-        </p>
+        <label for="birthdate" class="cds--label">Fecha de Nacimiento</label>
+        <input id="birthdate" name="birthdate" type="text" placeholder="DD-MM-AAAA" class="cds--text-input" required>
+        <button type="submit" class="cds--btn cds--btn--primary" style="margin-top: 1rem;">Proyección Astral</button>
+      </div>
+    </form>
+
+    {% if result %}
+      <div class="astro-response">
+        {{ result | safe }}
         {% if charm_image %}
-        <img src="{{ charm_image }}" alt="Amuleto de la suerte" style="max-width: 150px; margin-top: 1rem;">
+          <div style="margin-top: 1rem;">
+            <img src="{{ charm_image }}" alt="Amuleto de la suerte" style="max-width: 150px;">
+          </div>
         {% endif %}
       </div>
-      {% endif %}
-    </div>
-
+    {% endif %}
   </div>
-</main>
+</body>
+</html>
