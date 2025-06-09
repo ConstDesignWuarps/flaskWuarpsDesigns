@@ -79,16 +79,22 @@
       </div>
     </form>
 
-    {% if result %}
+  
       <div class="astro-response">
-        {{ result | safe }}
-        {% if charm_image %}
-          <div style="margin-top: 1rem;">
-            <img src="{{ charm_image }}" alt="Amuleto de la suerte" style="max-width: 150px;">
-          </div>
-        {% endif %}
+            {% if result %}
+              {% for line in result.split('\n') %}
+                {% if line.strip() %}
+                  <p><strong>{{ line.split(':')[0] }}:</strong> {{ line.split(':', 1)[1].strip() }}</p>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          
+            {% if charm_image %}
+              <div style="margin-top: 1rem;">
+                <img src="{{ charm_image }}" alt="Amuleto de la suerte" style="max-width: 150px;">
+              </div>
+            {% endif %}
       </div>
-    {% endif %}
   </div>
 </body>
 </html>
