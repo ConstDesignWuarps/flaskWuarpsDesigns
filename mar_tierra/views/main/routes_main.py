@@ -118,9 +118,13 @@ import datetime
 from flask import request, jsonify, render_template
 import openai
 
-@main.route("/embed/astro", methods=["GET"])
-def embed_astro_chat():
-    return render_template("main/embed_astro_chat.html")
+
+
+from flask import Blueprint, request, jsonify
+import datetime
+import openai
+
+main = Blueprint("main", __name__)
 
 @main.route("/astro/fortune", methods=["POST"])
 def astro_fortune():
@@ -132,11 +136,12 @@ def astro_fortune():
         week_of_year = datetime.datetime.utcnow().isocalendar()[1]
 
         system_prompt = (
-            "You are a whimsical and elegant astrologer bot. Based on the user's birthdate "
-            "and the current week of the year, give a mystical explanation of why things may "
-            "not be going well, and then provide a poetic, elegant sentence of encouragement. "
-            "Also suggest a lucky charm or totem (with a name like 'golden cat' or 'obsidian feather')."
-        )
+                "Eres un bot astrólogo místico y elegante. Basado en la fecha de nacimiento del usuario "
+                "y la semana actual del año, ofrece una explicación cósmica de por qué las cosas pueden no ir bien, "
+                "usando un tono poético, espiritual y un poco dramático. Luego, brinda una frase para que la persona pueda justificarse asi mismo "
+                "Finalmente, sugiere un amuleto o tótem de la suerte con un nombre evocador "
+                "(por ejemplo, 'gato dorado' o 'pluma de obsidiana'). Responde completamente en español."
+            )
 
         user_prompt = f"Birthdate: {birthdate_str}, Current Week: {week_of_year}"
 
@@ -150,17 +155,17 @@ def astro_fortune():
 
         message = response.choices[0].message.content.strip()
 
-        # Optionally extract image keyword
+        # Try to extract lucky charm (basic example)
         lucky_charm = None
         for line in message.split('\n'):
             if "lucky charm" in line.lower() or "totem" in line.lower():
-                lucky_charm = line
+                lucky_charm = line.strip()
                 break
 
         return jsonify({
-            "fortune": message,
+            "message": message,
             "charm_image_url": f"/static/totems/{lucky_charm.lower().replace(' ', '_')}.png" if lucky_charm else None
         })
 
     except Exception as e:
-        return jsonify({"response": "Something went wrong.", "error": str(e)}), 500
+        return jsonify({"error": str(e)}), 500
