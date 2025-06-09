@@ -1,0 +1,74 @@
+<!-- templates/main/embed_astro_chat.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Proyección Astral</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        #feedback {
+            margin-top: 1rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="_w3--chat-message__content_j6hd5_36">
+            <div>
+                <h2>Sabemos que sos perfecto Corazon. Pero también sabemos que
+                    Astro Celestial está obstruyendo tu camino esta semana. </h2>
+                <br>
+                <p>Danos tu fecha y revelaremos la verdad, también te daremos una bendición astral... ya tú sabee.</p>
+
+                <div class="_w3--ask-ibm-sample-prompt_1tstf_1">
+                    <div class="cds--form-item">
+                        <div class="cds--text-input-wrapper">
+                            <label for="puzzle-answer" class="cds--label">Fecha de Nacimiento</label>
+                            <input id="puzzle-answer" type="text" placeholder="DD-MM-AAAA" class="cds--text-input">
+                        </div>
+                        <button class="cds--btn cds--btn--primary" style="margin-top: 1rem;" onclick="checkAnswer()">
+                            Proyección Astral
+                        </button>
+                        <div id="feedback" class="cds--label"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function checkAnswer() {
+            const birthdateInput = document.getElementById("puzzle-answer").value.trim();
+            const feedback = document.getElementById("feedback");
+
+            if (!birthdateInput) {
+                feedback.textContent = "Por favor ingresa tu fecha de nacimiento.";
+                return;
+            }
+
+            try {
+                const response = await fetch("/astro/fortune", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ birthdate: birthdateInput })
+                });
+
+                const result = await response.json();
+
+                if (result.fortune) {
+                    feedback.innerHTML = `
+                        <strong>✨ Tu Proyección Astral ✨</strong><br><br>
+                        ${result.fortune.replace(/\n/g, "<br>")}<br><br>
+                        ${result.charm_image_url ? `<img src="${result.charm_image_url}" alt="Lucky Charm" style="max-width: 150px; margin-top: 1rem;">` : ""}
+                    `;
+                } else {
+                    feedback.textContent = result.response || "Algo salió mal.";
+                }
+            } catch (err) {
+                feedback.textContent = "No pudimos conectarnos al servidor astral.";
+            }
+        }
+    </script>
+</body>
+</html>
