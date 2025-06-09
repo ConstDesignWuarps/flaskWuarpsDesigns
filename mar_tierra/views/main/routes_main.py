@@ -131,3 +131,98 @@ def restaurant_chat():
         return jsonify({"response": bot_reply})
     except Exception as e:
         return jsonify({"response": "Sorry, something went wrong.", "error": str(e)}), 500
+
+
+#--------------------------------------------
+# Astro prompt & chatbot
+#--------------------------------------------
+
+@main.route("/embed/astro", methods=["GET", "POST"])
+def embed_astro():
+    result = None
+    charm_url = None
+
+    if request.method == "POST":
+        birthdate_str = request.form.get("birthdate", "").strip()
+
+        try:
+            birthdate = datetime.datetime.strptime(birthdate_str, "%d-%m-%Y")
+            week_of_year = datetime.datetime.utcnow().isocalendar()[1]
+
+            system_prompt = (
+                "Eres un bot astrólogo místico, elegante y sabio. "
+                "Basándote en la fecha de nacimiento del usuario y la semana actual del año, "
+                "ofrece una explicación cósmica de por qué las cosas pueden estar saliendo mal esta semana. "
+                "Sé poético, espiritual y un poco dramático, como si hablaras desde las estrellas. "
+                "Luego, brinda una frase de aliento o justificación elegante que la persona pueda usar para reconectar con su energía interior. "
+                "Finalmente, sugiere un amuleto o tótem de la suerte con un nombre evocador "
+                "(por ejemplo, 'gato dorado', 'pluma de obsidiana', 'luz de cuarzo'). "
+                "Responde exclusivamente en español, como si estuvieras guiando a un alma antigua."
+            )
+
+            user_prompt = f"Fecha de nacimiento: {birthdate_str}, Semana del año: {week_of_year}"
+
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ]
+            )
+
+            message = response.choices[0].message.content.strip()
+
+            # Extract lucky charm (totem)
+            lucky_charm = None
+            for line in message.split('\n'):
+                if "amuleto" in line.lower() or "tótem" in line.lower():
+                    lucky_charm = line.strip()
+                    break
+
+            if lucky_charm:
+                # Basic image lookup conversion
+                charm_url = f"/static/totems/{lucky_charm.lower().replace(' ', '_')}.png"
+
+            result = message
+
+        except Exception as e:
+            result = "Hubo un error al consultar los astros."
+
+    return render_template("main/embed_astro_chat.html", result=result, charm_image=charm_url)
+
+
+@main.route("/walter/chat", methods=["POST"])
+def walter_chat():
+    data = request.get_json()
+    user_message = data.get("message", "").strip()
+
+    try:
+        if not user_message:
+            return jsonify({"response": "Por favor, dime algo para poder iluminar tu camino. 🌠"})
+
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "Eres Walter Mercado, el legendario astrólogo y vidente. "
+                        "Respondes a todo con elegancia, dramatismo, amor incondicional y sabiduría astral. "
+                        "Hablas en español con frases cósmicas, referencias al universo y bendiciones. "
+                        "Siempre das esperanza y cierras tus mensajes con una frase como: "
+                        "'¡Mucho, mucho amor!' o 'Las estrellas te guían, pero el corazón decide.'"
+                    )
+                },
+                {"role": "user", "content": user_message}
+            ]
+        )
+
+        # Add the "Walter Mercado dice..." wrapper
+        reply_body = response.choices[0].message.content.strip()
+        wrapped_reply = f"✨ Walter Mercado dice: {reply_body}"
+
+        return jsonify({"response": wrapped_reply})
+
+    except Exception as e:
+        return jsonify({"response": "Ay, ocurrió un error cósmico. 🌌 Intenta nuevamente.", "error": str(e)}), 500
+
