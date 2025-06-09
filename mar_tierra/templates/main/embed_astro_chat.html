@@ -26,8 +26,23 @@
       white-space: normal;
     }
 
+    input.cds--text-input {
+      padding: 1rem;
+      font-size: 1.1rem;
+      width: 100%;
+    }
+
     button.cds--btn {
       background-color: #0f62fe;
+      width: 100%;
+      font-size: 1rem;
+      border-radius: 6px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    button.cds--btn:hover {
+      background-color: #0353e9;
+      box-shadow: 0 2px 8px rgba(15, 98, 254, 0.3);
     }
 
     strong {
@@ -45,8 +60,17 @@
     <form method="POST">
       <div class="cds--form-item">
         <label for="birthdate" class="cds--label">Fecha de Nacimiento</label>
-        <input id="birthdate" name="birthdate" type="text" placeholder="DD-MM-AAAA" class="cds--text-input" required>
-        <button type="submit" class="cds--btn cds--btn--primary" style="margin-top: 1rem;">Proyección Astral</button>
+        <input
+          id="birthdate"
+          name="birthdate"
+          type="text"
+          placeholder="DD-MM-AAAA"
+          class="cds--text-input"
+          required
+        >
+      </div>
+      <div class="cds--form-item" style="margin-top: 1rem;">
+        <button type="submit" class="cds--btn cds--btn--primary">🔮 Proyección Astral</button>
       </div>
     </form>
 
