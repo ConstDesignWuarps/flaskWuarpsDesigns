@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from mar_tierra.config import Config
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -15,6 +16,7 @@ login_manager.login_message_category = 'info'
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
+    CORS(app)
 
     # Initialize extensions with the app instance
     db.init_app(app)
