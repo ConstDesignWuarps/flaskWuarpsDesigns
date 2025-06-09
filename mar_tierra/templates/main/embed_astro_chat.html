@@ -1,74 +1,30 @@
-<!-- templates/main/embed_astro_chat.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Proyección Astral</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <style>
-        #feedback {
-            margin-top: 1rem;
-            font-style: italic;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Proyección Astral</title>
+  <style>
+    body { font-family: 'Georgia', serif; background: #fffdf7; color: #3b2c35; margin: 0; padding: 1rem; max-width: 600px; }
+    input, button { padding: 0.5rem; margin-top: 1rem; font-size: 1rem; width: 100%; }
+    .result { margin-top: 2rem; padding: 1rem; background: #fff2f2; border-left: 4px solid #c58db4; }
+    img { max-width: 120px; display: block; margin-top: 1rem; }
+  </style>
 </head>
 <body>
-    <main>
-        <div class="_w3--chat-message__content_j6hd5_36">
-            <div>
-                <h2>Sabemos que sos perfecto Corazonn. Pero también sabemos que
-                    Astro Celestial está obstruyendo tu camino esta semana. </h2>
-                <br>
-                <p>Danos tu fecha y revelaremos la verdad, también te daremos una bendición astral... ya tú sabes.</p>
+  <h2>✨ Proyección Astral Semanal ✨</h2>
+  <form method="POST">
+    <label for="birthdate">Fecha de nacimiento</label>
+    <input type="text" name="birthdate" id="birthdate" placeholder="DD-MM-AAAA" required>
+    <button type="submit">Consultar a los astros</button>
+  </form>
 
-                <div class="_w3--ask-ibm-sample-prompt_1tstf_1">
-                    <div class="cds--form-item">
-                        <div class="cds--text-input-wrapper">
-                            <label for="puzzle-answer" class="cds--label">Fecha de Nacimiento</label>
-                            <input id="puzzle-answer" type="text" placeholder="DD-MM-AAAA" class="cds--text-input">
-                        </div>
-                        <button class="cds--btn cds--btn--primary" style="margin-top: 1rem;" onclick="checkAnswer()">
-                            Proyección Astral
-                        </button>
-                        <div id="feedback" class="cds--label"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        async function checkAnswer() {
-            const birthdateInput = document.getElementById("puzzle-answer").value.trim();
-            const feedback = document.getElementById("feedback");
-
-            if (!birthdateInput) {
-                feedback.textContent = "Por favor ingresa tu fecha de nacimiento.";
-                return;
-            }
-
-            try {
-                const response = await fetch("/astro/fortune", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ birthdate: birthdateInput })
-                });
-
-                const result = await response.json();
-
-                if (result.fortune) {
-                    feedback.innerHTML = `
-                        <strong>✨ Tu Proyección Astral ✨</strong><br><br>
-                        ${result.fortune.replace(/\n/g, "<br>")}<br><br>
-                        ${result.charm_image_url ? `<img src="${result.charm_image_url}" alt="Lucky Charm" style="max-width: 150px; margin-top: 1rem;">` : ""}
-                    `;
-                } else {
-                    feedback.textContent = result.response || "Algo salió mal.";
-                }
-            } catch (err) {
-                feedback.textContent = "No pudimos conectarnos al servidor astral.";
-            }
-        }
-    </script>
+  {% if result %}
+    <div class="result">
+      {{ result|safe }}
+      {% if charm_image %}
+        <img src="{{ charm_image }}" alt="Amuleto">
+      {% endif %}
+    </div>
+  {% endif %}
 </body>
 </html>
