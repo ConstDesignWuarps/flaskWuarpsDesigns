@@ -8,48 +8,41 @@
     </head>
 
 <main id="main-content" class="_iec--page__main-content_1mqwk_158">
-  <div class="_w3--chat-container_1ebm2_1" style="height: calc(100dvh - 44px);">
-    <div class="_w3--chat-container__region-container_1ebm2_13">
-      <div class="_w3--chat-container__region_1ebm2_13 _w3--chat-container__region-padding-reduced_1ebm2_25 _w3--region_1id64_1 _w3--region--first_1id64_11 cds--css-grid">
+  <div class="cds--grid" style="min-height: 100vh; align-items: center;">
+    <div class="cds--row">
 
-        <div class="_w3--chat-container__content-container_1ebm2_49 cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--xlg:col-span-16 cds--max:col-span-16 cds--css-grid-column">
-          <div class="_w3--chat-container__chat-messages_1ebm2_54">
-            <div class="_w3--chat-message_j6hd5_1 _w3--ask-ibm-chat-messages_1f685_1">
-
-              <!-- Top Message -->
-              <div class="_w3--chat-message__content_j6hd5_36">
-                <h2>Sabemos que sos perfecto Corazonn. Pero también sabemos que Astro Celestial está obstruyendo tu camino esta semana.</h2>
-                <p>Danos tu fecha y revelaremos la verdad. También te daremos una bendición astral... ya tú sabes.</p>
-
-                <!-- Form starts here -->
-                <form method="POST">
-                  <div class="cds--form-item">
-                    <div class="cds--text-input-wrapper">
-                      <label for="puzzle-answer" class="cds--label">Fecha de Nacimiento</label>
-                      <input id="puzzle-answer" name="birthdate" type="text" placeholder="DD-MM-AAAA" class="cds--text-input" required>
-                    </div>
-                    <button type="submit" class="cds--btn cds--btn--primary" style="margin-top: 1rem;">Proyección Astral</button>
-                  </div>
-                </form>
-
-                <!-- Result appears here after POST -->
-                {% if result %}
-                <div class="cds--form-item">
-                  <p id="feedback" class="cds--label" style="margin-top: 1rem;">
-                    {{ result | safe }}
-                  </p>
-                  {% if charm_image %}
-                  <img src="{{ charm_image }}" alt="Amuleto de la suerte" style="max-width: 150px; margin-top: 1rem;">
-                  {% endif %}
-                </div>
-                {% endif %}
-
-              </div> <!-- end message content -->
-            </div>
-          </div>
-        </div>
-
+      <!-- Left text block -->
+      <div class="cds--col-lg-8">
+        <h2>Sabemos que sos perfecto Corazonn. Pero también sabemos que Astro Celestial está obstruyendo tu camino esta semana.</h2>
+        <p style="margin-top: 1rem;">
+          Danos tu fecha y te revelaremos la verdad, también te daremos una bendición astral... ya tú sabes...
+        </p>
       </div>
+
+      <!-- Right form block -->
+      <div class="cds--col-lg-8">
+        <form method="POST">
+          <div class="cds--form-item">
+            <div class="cds--text-input-wrapper">
+              <label for="birthdate" class="cds--label">Fecha de Nacimiento</label>
+              <input id="birthdate" name="birthdate" type="text" placeholder="DD-MM-AAAA" class="cds--text-input" required>
+            </div>
+            <button type="submit" class="cds--btn cds--btn--primary" style="margin-top: 1rem;">Proyección Astral</button>
+          </div>
+        </form>
+
+        {% if result %}
+        <div class="cds--form-item">
+          <p id="feedback" class="cds--label" style="margin-top: 1.5rem; white-space: normal; line-height: 1.6;">
+            {{ result | safe }}
+          </p>
+          {% if charm_image %}
+          <img src="{{ charm_image }}" alt="Amuleto de la suerte" style="max-width: 150px; margin-top: 1rem;">
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+
     </div>
   </div>
 </main>
