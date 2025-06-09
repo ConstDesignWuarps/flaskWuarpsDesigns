@@ -1,74 +1,63 @@
 <!-- templates/main/embed_astro_chat.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Proyección Astral</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <style>
-        #feedback {
-            margin-top: 1rem;
-            font-style: italic;
-        }
-    </style>
-</head>
-<body>
-    <main>
-        <div class="_w3--chat-message__content_j6hd5_36">
-            <div>
-                <h2>Sabemos que sos perfecto Corazon. Pero también sabemos que
-                    Astro Celestial está obstruyendo tu camino esta semana. </h2>
-                <br>
-                <p>Danos tu fecha y revelaremos la verdad, también te daremos una bendición astral... ya tú sabee.</p>
+<div class="_w3--chat-container__content-container_1ebm2_49 cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--xlg:col-span-16 cds--max:col-span-16 cds--css-grid-column">
+  <div class="_w3--chat-container__chat-messages_1ebm2_54">
+    <div class="_w3--chat-message_j6hd5_1 _w3--ask-ibm-chat-messages_1f685_1">
 
-                <div class="_w3--ask-ibm-sample-prompt_1tstf_1">
-                    <div class="cds--form-item">
-                        <div class="cds--text-input-wrapper">
-                            <label for="puzzle-answer" class="cds--label">Fecha de Nacimiento</label>
-                            <input id="puzzle-answer" type="text" placeholder="DD-MM-AAAA" class="cds--text-input">
-                        </div>
-                        <button class="cds--btn cds--btn--primary" style="margin-top: 1rem;" onclick="checkAnswer()">
-                            Proyección Astral
-                        </button>
-                        <div id="feedback" class="cds--label"></div>
-                    </div>
-                </div>
+      <div class="_w3--chat-message__content_j6hd5_36">
+        <div>
+          <h2>Sabemos que sos perfecto Corazonn. Pero también sabemos que Astro Celestial está obstruyendo tu camino esta semana.</h2>
+          <br>
+
+          <p>Danos tu fecha y revelaremos la verdad, también te daremos una bendición astral... ya tú sabes.</p>
+          <div class="_w3--ask-ibm-sample-prompt_1tstf_1">
+            <div class="cds--form-item">
+              <div class="cds--text-input-wrapper">
+                <label for="puzzle-answer" class="cds--label">Fecha de Nacimiento</label>
+                <input id="puzzle-answer" type="text" placeholder="DD-MM-AAAA" class="cds--text-input">
+              </div>
+              <button class="cds--btn cds--btn--primary" style="margin-top: 1rem;" onclick="checkAnswer()">Proyección Astral</button>
+              <div id="feedback" class="cds--label" style="margin-top: 1rem;"></div>
             </div>
+          </div>
         </div>
-    </main>
+      </div>
 
-    <script>
-        async function checkAnswer() {
-            const birthdateInput = document.getElementById("puzzle-answer").value.trim();
-            const feedback = document.getElementById("feedback");
+    </div>
+  </div>
+</div>
 
-            if (!birthdateInput) {
-                feedback.textContent = "Por favor ingresa tu fecha de nacimiento.";
-                return;
-            }
+<script>
+  async function checkAnswer() {
+    const birthdateInput = document.getElementById("puzzle-answer").value.trim();
+    const feedback = document.getElementById("feedback");
 
-            try {
-                const response = await fetch("/astro/fortune", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ birthdate: birthdateInput })
-                });
+    if (!birthdateInput) {
+      feedback.textContent = "Por favor ingresa tu fecha de nacimiento.";
+      return;
+    }
 
-                const result = await response.json();
+    feedback.innerHTML = "🌌 Consultando al universo...";
 
-                if (result.fortune) {
-                    feedback.innerHTML = `
-                        <strong>✨ Tu Proyección Astral ✨</strong><br><br>
-                        ${result.fortune.replace(/\n/g, "<br>")}<br><br>
-                        ${result.charm_image_url ? `<img src="${result.charm_image_url}" alt="Lucky Charm" style="max-width: 150px; margin-top: 1rem;">` : ""}
-                    `;
-                } else {
-                    feedback.textContent = result.response || "Algo salió mal.";
-                }
-            } catch (err) {
-                feedback.textContent = "No pudimos conectarnos al servidor astral.";
-            }
-        }
-    </script>
-</body>
-</html>
+    try {
+      const response = await fetch("/astro/fortune", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ birthdate: birthdateInput })
+      });
+
+      const result = await response.json();
+
+      if (result.fortune) {
+        feedback.innerHTML = `
+          <strong>🔮 Tu Proyección Astral</strong><br><br>
+          ${result.fortune.replace(/\n/g, "<br>")}<br><br>
+          ${result.charm_image_url ? `<img src="${result.charm_image_url}" alt="Tótem de la suerte" style="max-width: 150px; margin-top: 1rem;">` : ""}
+        `;
+      } else {
+        feedback.textContent = result.response || "Algo salió mal.";
+      }
+    } catch (err) {
+      feedback.textContent = "No pudimos conectarnos al servidor astral.";
+    }
+  }
+</script>
