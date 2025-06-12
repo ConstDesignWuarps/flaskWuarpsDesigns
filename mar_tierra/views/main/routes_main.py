@@ -203,6 +203,7 @@ def embed_astro():
     return render_template("main/embed_astro_chat.html", result=result, charm_image=charm_url)
 
 
+
 @main.route("/walter/chat", methods=["POST"])
 def walter_chat():
     data = request.get_json()
