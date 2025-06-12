@@ -151,7 +151,12 @@ def embed_astro():
         birthdate_str = request.form.get("birthdate", "").strip()
 
         try:
-            birthdate = datetime.datetime.strptime(birthdate_str, "%d-%m-%Y")
+            # HTML5 <input type="date"> returns 'YYYY-MM-DD'
+            birthdate = datetime.datetime.strptime(birthdate_str, "%Y-%m-%d")
+
+            # Optional: format it to 'DD-MM-YYYY' if you want to show it that way in prompt
+            birthdate_display = birthdate.strftime("%d-%m-%Y")
+
             week_of_year = datetime.datetime.utcnow().isocalendar()[1]
 
             system_prompt = (
@@ -166,11 +171,7 @@ def embed_astro():
                 "Responde en español. Formato siempre debe tener esas tres líneas exactas."
             )
 
-
-
-
-
-            user_prompt = f"Fecha de nacimiento: {birthdate_str}, Semana del año: {week_of_year}"
+            user_prompt = f"Fecha de nacimiento: {birthdate_display}, Semana del año: {week_of_year}"
 
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
@@ -182,16 +183,17 @@ def embed_astro():
 
             message = response.choices[0].message.content.strip()
 
-            # Extract lucky charm (totem)
+            # Extract lucky charm (totem) line
             lucky_charm = None
             for line in message.split('\n'):
-                if "amuleto" in line.lower() or "tótem" in line.lower():
+                if "amuleto" in line.lower() or "símbolo" in line.lower():
                     lucky_charm = line.strip()
                     break
 
             if lucky_charm:
-                # Basic image lookup conversion
-                charm_url = f"/static/totems/{lucky_charm.lower().replace(' ', '_')}.png"
+                # Basic image filename based on simplified charm name
+                sanitized = lucky_charm.lower().replace(' ', '_').replace(':', '').replace(',', '').replace('.', '')
+                charm_url = f"/static/totems/{sanitized}.png"
 
             result = message
 
