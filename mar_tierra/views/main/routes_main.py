@@ -209,47 +209,32 @@ def walter_chat():
     data = request.get_json()
     user_message = data.get("message", "").strip()
 
-    # 1) If we don't have a name yet, enter the name-capture flow
-    if "walter_name" not in session:
-        # If they sent nothing or just whitespace, prompt for name
-        if not user_message:
-            return jsonify({
-                "response": "¡Ser de Luz! Dígame su nombre, su merced, y contestaré todo lo que le depara el futuro. 🌠"
-            })
-        # Otherwise, treat their message as the name
-        name = user_message.split()[0]  # or store full string
-        session["walter_name"] = name
-        return jsonify({
-            "response": f"¡Maravilloso, {name}! Ahora cuéntame qué deseas saber o cómo puedo iluminar tu camino. ✨"
-        })
-
-    # 2) Normal Walter Mercado flow, now that we have a name
-    system_prompt = (
-        "Eres Walta Mercad, el legendario astrólogo y vidente. "
-        "Respondes con elegancia, dramatismo, amor incondicional y sabiduría astral. "
-        "Hablas en español con frases cósmicas, referencias al universo y bendiciones. "
-        "Siempre das esperanza y cierras tus mensajes con una frase como: "
-        "'¡Mucho, mucho amor!' o 'Las estrellas te guían, pero el corazón decide.'"
-    )
-
-    # We inject the name as context so the model addresses the user by name
-    full_messages = [
-        {"role": "system",  "content": system_prompt},
-        {"role": "user",    "content": f"Mi nombre es {session['walter_name']}."},
-        {"role": "user",    "content": user_message}
-    ]
-
     try:
-        resp = openai.ChatCompletion.create(
+        if not user_message:
+            return jsonify({"response": "Por favor, dime algo para poder iluminar tu camino. 🌠"})
+
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=full_messages
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "Eres Walter Mercado, el legendario astrólogo y vidente. "
+                        "Respondes a todo con elegancia, dramatismo, amor incondicional y sabiduría astral. "
+                        "Hablas en español con frases cósmicas, referencias al universo y bendiciones. "
+                        "Siempre das esperanza y cierras tus mensajes con una frase como: "
+                        "'¡Mucho, mucho amor!' o 'Las estrellas te guían, pero el corazón decide.'"
+                    )
+                },
+                {"role": "user", "content": user_message}
+            ]
         )
-        reply_body = resp.choices[0].message.content.strip()
-        wrapped = f"✨ Walter Mercado dice: {reply_body}"
-        return jsonify({"response": wrapped})
+
+        # Add the "Walter Mercado dice..." wrapper
+        reply_body = response.choices[0].message.content.strip()
+        wrapped_reply = f"✨ Walter Mercado dice: {reply_body}"
+
+        return jsonify({"response": wrapped_reply})
 
     except Exception as e:
-        return jsonify({
-            "response": "Ay, ocurrió un error cósmico. 🌌 Intenta nuevamente.",
-            "error": str(e)
-        }), 500
+        return jsonify({"response": "Ay, ocurrió un error cósmico. 🌌 Intenta nuevamente.", "error": str(e)}), 500
