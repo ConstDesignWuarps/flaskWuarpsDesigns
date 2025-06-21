@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, jsonify, url_for, session
+from flask import render_template, Blueprint, request, jsonify, url_for, session, current_app
 from mar_tierra import db
 from mar_tierra.models import Visit
 import openai
@@ -209,31 +209,39 @@ def walter_chat():
     data = request.get_json()
     user_message = data.get("message", "").strip()
 
-    # 1) Name-capture flow
+    # 1) First-ever call: ask for the name (and remember we’ve asked)
+    if "walter_name" not in session and not session.get("walter_name_asked", False):
+        session["walter_name_asked"] = True
+        session.modified = True
+        return jsonify({
+            "response": "¡Ser de Luz! Dígame su nombre, su merced, y contestaré todo lo que le depara el futuro. 🌠"
+        })
+
+    # 2) Second call: we’ve already asked, now expect the name
     if "walter_name" not in session:
         if not user_message:
             return jsonify({
-                "response": "¡Ser de Luz! Dígame su nombre, su merced, y contestaré todo lo que le depara el futuro. 🌠"
+                "response": "No pude escuchar tu nombre. Por favor, dime tu nombre. 🌟"
             })
-        # store the first non-empty message as the user’s name
-        session["walter_name"] = user_message
+        session["walter_name"] = user_message  # or user_message.split()[0] if you prefer just first word
         session.modified = True
         return jsonify({
             "response": f"¡Maravilloso, {session['walter_name']}! Ahora cuéntame qué deseas saber o cómo puedo iluminar tu camino. ✨"
         })
 
-    # 2) Once we have a name, proceed with the usual system + user messages
+    # 3) From now on: normal Walter Mercado flow
     if not user_message:
         return jsonify({"response": "Por favor, dime algo para poder iluminar tu camino. 🌠"})
 
     system_prompt = (
         "Eres Walter Mercado, el legendario astrólogo y vidente. "
-        "Respondes a todo con elegancia, dramatismo, amor incondicional y sabiduría astral. "
+        "Respondes con elegancia, dramatismo, amor incondicional y sabiduría astral. "
         "Hablas en español con frases cósmicas, referencias al universo y bendiciones. "
         "Siempre das esperanza y cierras tus mensajes con una frase como: "
         "'¡Mucho, mucho amor!' o 'Las estrellas te guían, pero el corazón decide.'"
     )
 
+    # inject the user’s name so the model remembers who it’s talking to
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user",   "content": f"Mi nombre es {session['walter_name']}."},
@@ -249,6 +257,7 @@ def walter_chat():
         return jsonify({"response": f"✨ Walter Mercado dice: {reply}"})
 
     except Exception as e:
+        current_app.logger.error(f"Walter chat error: {e}")
         return jsonify({
             "response": "Ay, ocurrió un error cósmico. 🌌 Intenta nuevamente.",
             "error": str(e)
