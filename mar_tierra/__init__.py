@@ -14,7 +14,15 @@ login_manager.login_message_category = 'info'
 
 def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
+
+    # --- Allow the session cookie to be sent in a cross‐site iframe ---
+    # GitHub Pages is HTTPS, so SECURE=True is fine
+    app.config.update(
+        SESSION_COOKIE_SAMESITE="None",
+        SESSION_COOKIE_SECURE=True,
+    )
+    # ---------------------------------------------------------------
 
     # Initialize extensions with the app instance
     db.init_app(app)
