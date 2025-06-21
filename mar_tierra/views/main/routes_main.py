@@ -206,32 +206,29 @@ def embed_astro():
 
 @main.route("/walter/chat", methods=["POST"])
 def walter_chat():
-    data = request.get_json()
+    data         = request.get_json() or {}
     user_message = data.get("message", "").strip()
+    user_name    = data.get("name",   "").strip()
+    is_init      = bool(data.get("init", False))
 
-    # 1) First-ever call: ask for the name (and remember we’ve asked)
-    if "walter_name" not in session and not session.get("walter_name_asked", False):
-        session["walter_name_asked"] = True
-        session.modified = True
+    # 1) Haven’t even asked for a name yet?
+    if not user_name and not is_init:
         return jsonify({
             "response": "¡Ser de Luz! Dígame su nombre, su merced, y contestaré todo lo que le depara el futuro. 🌠"
         })
 
-    # 2) Second call: we’ve already asked, now expect the name
-    if "walter_name" not in session:
-        if not user_message:
-            return jsonify({
-                "response": "No pude escuchar tu nombre. Por favor, dime tu nombre. 🌟"
-            })
-        session["walter_name"] = user_message  # or user_message.split()[0] if you prefer just first word
-        session.modified = True
+    # 2) The very next POST, you’re sending name + init=true
+    if user_name and is_init:
+        greeting = f"¡Maravilloso, {user_name}! Ahora cuéntame qué deseas saber o cómo puedo iluminar tu camino. ✨"
         return jsonify({
-            "response": f"¡Maravilloso, {session['walter_name']}! Ahora cuéntame qué deseas saber o cómo puedo iluminar tu camino. ✨"
+            "response": greeting
         })
 
     # 3) From now on: normal Walter Mercado flow
     if not user_message:
-        return jsonify({"response": "Por favor, dime algo para poder iluminar tu camino. 🌠"})
+        return jsonify({
+            "response": "Por favor, dime algo para poder iluminar tu camino. 🌠"
+        })
 
     system_prompt = (
         "Eres Walter Mercado, el legendario astrólogo y vidente. "
@@ -240,11 +237,9 @@ def walter_chat():
         "Siempre das esperanza y cierras tus mensajes con una frase como: "
         "'¡Mucho, mucho amor!' o 'Las estrellas te guían, pero el corazón decide.'"
     )
-
-    # inject the user’s name so the model remembers who it’s talking to
     messages = [
         {"role": "system", "content": system_prompt},
-        {"role": "user",   "content": f"Mi nombre es {session['walter_name']}."},
+        {"role": "user",   "content": f"Mi nombre es {user_name}."},
         {"role": "user",   "content": user_message}
     ]
 
@@ -253,11 +248,9 @@ def walter_chat():
             model="gpt-3.5-turbo",
             messages=messages
         )
-        reply = resp.choices[0].message.content.strip()
-        return jsonify({"response": f"✨ Walter Mercado dice: {reply}"})
-
+        answer = resp.choices[0].message.content.strip()
+        return jsonify({"response": f"✨ Walter Mercado dice: {answer}"})
     except Exception as e:
-        current_app.logger.error(f"Walter chat error: {e}")
         return jsonify({
             "response": "Ay, ocurrió un error cósmico. 🌌 Intenta nuevamente.",
             "error": str(e)
