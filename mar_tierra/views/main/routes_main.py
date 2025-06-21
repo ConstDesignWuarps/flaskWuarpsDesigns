@@ -204,37 +204,54 @@ def embed_astro():
 
 
 
-@main.route("/walter/chat", methods=["POST"])
+# Define the shared system prompt
+SYSTEM_PROMPT = {
+    "role": "system",
+    "content": (
+        "Eres Walter Mercado, el legendario astrólogo y vidente. "
+        "Respondes a todo con elegancia, dramatismo, amor incondicional y sabiduría astral. "
+        "Hablas en español con frases cósmicas, referencias al universo y bendiciones. "
+        "Siempre das esperanza y cierras tus mensajes con una frase como: '¡Mucho, mucho amor!' "
+        "o 'Las estrellas te guían, pero el corazón decide.'"
+    )
+}
+
+@app.before_request
+def ensure_history():
+    # Initialize chat history the first time
+    if 'history' not in session:
+        session['history'] = [SYSTEM_PROMPT]
+
+@app.route("/walter/chat", methods=["POST"])
 def walter_chat():
     data = request.get_json()
     user_message = data.get("message", "").strip()
 
-    try:
-        if not user_message:
-            return jsonify({"response": "Por favor, dime algo para poder iluminar tu camino. 🌠"})
+    if not user_message:
+        return jsonify({
+            "response": "Por favor, dime algo para poder iluminar tu camino. 🌠"
+        })
 
+    # Append user message to session history
+    session['history'].append({"role": "user", "content": user_message})
+
+    # Call OpenAI with full history to preserve context
+    try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "Eres Walter Mercado, el legendario astrólogo y vidente. "
-                        "Respondes a todo con elegancia, dramatismo, amor incondicional y sabiduría astral. "
-                        "Hablas en español con frases cósmicas, referencias al universo y bendiciones. "
-                        "Siempre das esperanza y cierras tus mensajes con una frase como: "
-                        "'¡Mucho, mucho amor!' o 'Las estrellas te guían, pero el corazón decide.'"
-                    )
-                },
-                {"role": "user", "content": user_message}
-            ]
+            messages=session['history']
         )
-
-        # Add the "Walter Mercado dice..." wrapper
-        reply_body = response.choices[0].message.content.strip()
-        wrapped_reply = f"✨ Walter Mercado dice: {reply_body}"
-
-        return jsonify({"response": wrapped_reply})
-
     except Exception as e:
-        return jsonify({"response": "Ay, ocurrió un error cósmico. 🌌 Intenta nuevamente.", "error": str(e)}), 500
+        return jsonify({
+            "response": "Ay, ocurrió un error cósmico. 🌌 Intenta nuevamente.",
+            "error": str(e)
+        }), 500
+
+    # Extract assistant reply
+    reply_content = response.choices[0].message.content.strip()
+    wrapped = f"✨ Walter Mercado dice: {reply_content}"
+
+    # Append assistant reply to history
+    session['history'].append({"role": "assistant", "content": reply_content})
+
+    return jsonify({"response": wrapped})
