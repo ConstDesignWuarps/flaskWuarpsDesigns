@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, jsonify, url_for
+from flask import render_template, Blueprint, request, jsonify, url_for, session
 from mar_tierra import db
 from mar_tierra.models import Visit
 import openai
